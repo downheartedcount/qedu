@@ -20,10 +20,10 @@ STATIC_DIR = os.path.join(BASE_DIR, 'static')
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'b*)$+3)4*uqv@gz0+ly_)(2w9(nyv**lcg#=a!@1^av_cv8wmd')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = bool(os.environ.get('DJANGO_DEBUG', True))
+DEBUG = bool(os.environ.get('DJANGO_DEBUG', False))
 
-ALLOWED_HOSTS = ['*']
-CSRF_TRUSTED_ORIGINS = ['http://89.46.34.193']
+ALLOWED_HOSTS = ['http://89.46.34.193', 'http://server.qeduprod.kz']
+CSRF_TRUSTED_ORIGINS = ['http://89.46.34.193', 'http://server.qeduprod.kz']
 # Application definitionp
 
 INSTALLED_APPS = [
