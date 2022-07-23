@@ -1,0 +1,57 @@
+{% extends 'dashboard/admin/base.html' %}
+
+{% load static %}
+
+{% block body %}
+
+<section class="">
+
+    <!-- Breadcrumb -->
+         <div class="container">
+<div class="row bootstrap snippets bootdeys pb-2 bg-light mb-4">
+    <div class="col-md-9 col-sm-7">
+        <h2>Курсы</h2>
+    </div>
+    <div class="col-md-3 col-sm-5">
+        <form method="get" role="form" class="search-form-full">
+            <div class="form-group">
+                <input type="text" class="form-control" name="s" id="search-input" placeholder="Search...">
+                <i class="entypo-search"></i>
+            </div>
+        </form>
+    </div>
+</div>
+
+                        <div class="container px-4 px-lg-5 mt-5">
+
+                <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+
+                      {% if courses %}
+        {% for course in courses %}
+                    <div class="col mb-5">
+                        <div class="card h-100">
+                            <!-- Product image-->
+                            <img class="card-img-top" src="{{ course.thumb.url }}" alt="..." />
+                            <!-- Product details-->
+                            <div class="card-body p-4">
+                                <div class="text-center">
+                                    <!-- Product name-->
+                                    <h5 class="fw-bolder">{{ course.name }}</h5>
+                                    <!-- Product price-->
+                                    {{ course.students.get_queryset.count }} студентов
+                                </div>
+                            </div>
+                            <!-- Product actions-->
+                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="{% url 'course_detail' course.pk%}">Детализация</a></div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% endif %}
+                </div>
+            </div>
+        </section>
+
+{% endblock %}
+

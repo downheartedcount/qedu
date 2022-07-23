@@ -1,0 +1,70 @@
+{% extends 'dashboard/learner/base.html' %}
+{% load static %}
+{% block body %}
+    <section id="courses" class="py-4">
+   <div class="container">
+      <div class="row mb-5">
+         <div class="col-md-9">
+            <h1 class="display-6">{{ course.name }}</h1>
+            <p class="text-justify">
+               {{ course.synopsis }}
+            </p>
+         </div>
+         <div class="col-md-3">
+            <div class="card mb-3">
+               <!--here include the photo that stored in media/photos dir-->
+               <!--here photo is the field name-->
+               <!-- course.trainer.photo.url is used to get the image of each trainer-->
+               <!--trainer is a foregin key field and photo is field in trainers models and later url-->
+               {% if course.thumb %}
+               <img src="{{ course.thumb.url }}" alt="{{ course.name }}">
+               {% else %}
+               <p>No image</p>
+               {% endif %}
+               <div class="card-body">
+                  <h5 class="card-title">Автор курса</h5>
+                  <h6 class="text-secondary">{{ course.trainer }}</h6>
+                  <hr>
+                  <h6 class="text-secondary">Уроки: {{ course.tutorial_set.count }}</h6>
+                       {% if tutorial.course in user.course_set.all %}
+                  <div class="mb-3">
+                     <a href="{% url 'buy' course.pk %}" class="btn btn-outline-info">Купить</a>
+                  </div>
+                   {% endif %}
+               </div>
+            </div>
+
+         </div>
+<div class="accordion accordion-flush" id="accordionFlushExample">
+  {% for module in modules %}
+      <div class="accordion-item">
+         <h2 class="accordion-header" id="flush-heading-{{module.id}}">
+             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                data-bs-target="#flush-collapse-{{module.id}}" aria-expanded="false" aria-
+                controls="flush-collapse-{{module.id}}">
+                   {{module.name}}
+              </button>
+         </h2>
+ <div id="flush-collapse-{{module.id}}" class="accordion-collapse collapse" aria-
+           labelledby="flush-heading-{{module.id}}" data-bs-parent="#accordionFlushExample">
+             <div class="accordion-body">
+                <ol type="1">
+                    {% for tutorial in module.tutorial_set.all %}
+                        <li><a href="{% url 'lessons' tutorial.pk %}">{{tutorial.title}} </a></li>
+                    {% endfor %}
+
+                </ol>
+             </div>
+
+       </div>
+
+</div>
+
+{% endfor %}
+   </div>
+      </div>
+
+   </div>
+</section>
+
+{% endblock %}

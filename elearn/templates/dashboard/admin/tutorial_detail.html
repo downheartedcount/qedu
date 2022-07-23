@@ -1,0 +1,53 @@
+{% extends 'dashboard/admin/base.html' %}
+{% load embed_video_tags %}
+{% load static %}
+{% block body %}
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <section id="courses" class="py-4">
+   <div class="container">
+      <div class="row mb-5">
+         <div class="">
+            <p class="text-justify">
+               {{ tutorial.title }}
+                <a href="{% url 'update_tutorial' tutorial.pk %}"><button type="button" class="btn btn-danger">Обновить</button></a></td>
+
+            </p>
+         </div>
+         <div class="" style="padding-top: 20px">
+            <!-- Blog Post -->
+            <div class="card mb-4">
+
+                    {% video object.video "large" %}
+
+               <div class="card-body">
+                  <h2 class="card-title"></h2>
+                  <p class="card-text" id="textarea">{{ object.content }}</p>
+               </div>
+                <a href="{{ tutorial.task }}">Задание</a>
+                <tbody>
+        {% for quiz in quizzes %}
+          <tr>
+            <td class="align-middle"><a href="{% url 'quiz_change' quiz.pk %}">{{ quiz.tutorial.title}}</a></td>
+            <td class="align-middle">{{ quiz.subject.get_html_badge }}</td>
+            <td class="align-middle">{{ quiz.questions_count }}</td>
+            <td class="align-middle">{{ quiz.taken_count }}</td>
+            <td class="text-right">
+              <a href="{% url 'quiz_results' quiz.pk %}" class="btn btn-primary">Посмотреть результаты</a>
+            </td>
+          </tr>
+        {% empty %}
+          <tr>
+            <td class="bg-light text-center font-italic" colspan="5">You haven't created any quiz yet.</td>
+                        <a href="{% url 'quiz_add' tutorial.pk %}" class="btn btn-primary">Create Quiz</a>
+
+          </tr>
+        {% endfor %}
+      </tbody>
+            </div>
+         </div>
+      </div>
+   </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% load static %}
+    <meta charset="utf-8">
+    <title>Quantum Education</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="{% static 'lib/animate/animate.min.css' %}" rel="stylesheet">
+    <link href="{% static 'lib/lightbox/css/lightbox.min.css' %}" rel="stylesheet">
+    <link href="{% static 'lib/owlcarousel/assets/owl.carousel.min.css' %}" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+</head>
+
+<body data-bs-spy="scroll" data-bs-target=".navbar" data-bs-offset="51">
+    <!-- Spinner Start -->
+    <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+        <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+    <!-- Spinner End -->
+
+
+    <!-- Navbar Start -->
+    <nav class="navbar navbar-expand-lg bg-white navbar-light fixed-top shadow py-lg-0 px-4 px-lg-5 wow fadeIn" data-wow-delay="0.1s">
+        <a href="{% url 'home' %}" class="navbar-brand d-block d-lg-none">
+            <h1 class="text-primary fw-bold m-0">Q-Edu</h1>
+        </a>
+        <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-between py-4 py-lg-0" id="navbarCollapse">
+            <div class="navbar-nav ms-auto py-0">
+                <a href="{% url 'lsign' %}" class="nav-item nav-link active">Регистрация</a>
+            </div>
+            <a href="{% url 'home' %}" class="navbar-brand bg-secondary py-3 px-4 mx-3 d-none d-lg-block">
+                <h1 class="text-primary fw-bold m-0">Q-Edu</h1>
+            </a>
+            <div class="navbar-nav me-auto py-0">
+                <a href="{% url 'login_form' %}" class="nav-item nav-link">Войти</a>
+            </div>
+        </div>
+    </nav>
+    <!-- Navbar End -->
+
+
+    <!-- Header Start -->
+    <div class="container-fluid bg-light my-6 mt-0" id="home" style = "background-image: url(https://www.pexels.com/photo/young-women-working-on-laptops-in-creative-workspace-4126705/)">
+        <div class="container" >
+            <div class="row g-5 align-items-center" >
+                <div class="col-lg-6 py-6 pb-0 pt-lg-0">
+                    <h3 class="text-primary mb-3">Добро пожаловать</h3>
+                    <h1 class="display-3 mb-3">Q-Education</h1>
+                    <h2 class="typed-text-output d-inline"></h2>
+                    <div class="typed-text d-none">Онлайн обучение, Подготовка к ЕНТ, Профессиональные курсы</div>
+                    <div class="d-flex align-items-center pt-5">
+                        <a href="{% url 'lsign' %}" class="btn btn-primary py-3 px-4 me-5">Вперед!</a>
+                        <button type="button" class="btn-play" data-bs-toggle="modal"
+                            data-src="https://www.youtube.com/embed/DWRcNpR6Kdc" data-bs-target="#videoModal">
+                            <span></span>
+                        </button>
+                        <h5 class="ms-4 mb-0 d-none d-sm-block">Ознакомительное видео</h5>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <img class="img-fluid" src="https://freepngimg.com/thumb/anime/131900-school-anime-girl-png-image-high-quality.png" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Header End -->
+
+
+    <!-- Video Modal Start -->
+    <div class="modal modal-video fade" id="videoModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content rounded-0">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="exampleModalLabel">Quantum Education</h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- 16:9 aspect ratio -->
+                    <div class="ratio ratio-16x9">
+                        <iframe class="embed-responsive-item" src="" id="video" allowfullscreen allowscriptaccess="always"
+                            allow="autoplay"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Video Modal End -->
+
+
+    <!-- About Start -->
+    <div class="container-xxl py-6" id="about">
+        <div class="container">
+            <div class="row g-5">
+                <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s">
+                    <div class="d-flex align-items-center mb-5">
+                        <div class="years flex-shrink-0 text-center me-4">
+                            <h1 class="display-1 mb-0">7</h1>
+                            <h5 class="mb-0">лет</h5>
+                        </div>
+                        <h3 class="lh-base mb-0">продуктивной работы в сфере подготовки учеников</h3>
+                    </div>
+                    <p class="mb-4">Наша команда не просто профи, а фанатики своего дела, миссия которых - успех каждого ученика</p>
+                    <p class="mb-3"><i class="far fa-check-circle text-primary me-3"></i>Приемлимые цены</p>
+                    <p class="mb-3"><i class="far fa-check-circle text-primary me-3"></i>Высокое качество материала</p>
+                    <p class="mb-3"><i class="far fa-check-circle text-primary me-3"></i>Интересный учебный процесс</p>
+                    <a class="btn btn-primary py-3 px-5 mt-3" href="https://schoolquantum.kz/">Узнать больше</a>
+                </div>
+                <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.5s">
+                    <div class="row g-3 mb-4">
+                        <div class="col-sm-6">
+                            <img class="img-fluid rounded" src="https://thumb.tildacdn.com/tild3838-3964-4965-b935-363530646134/-/resize/1000x/-/format/webp/_-1.png" alt="">
+                        </div>
+                        <div class="col-sm-6">
+                            <img class="img-fluid rounded" src="https://thumb.tildacdn.com/tild3365-6639-4132-b930-326432653138/-/format/webp/_-1.png" alt="">
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center mb-3">
+                        <h5 class="border-end pe-3 me-3 mb-0">Ученики</h5>
+                        <h2 class="text-primary fw-bold mb-0" data-toggle="counter-up">1236</h2>
+                    </div>
+                    <p class="mb-4">Уже больше тысячи учеников прошли наши курсы</p>
+                    <div class="d-flex align-items-center mb-3">
+                        <h5 class="border-end pe-3 me-3 mb-0">Курсы</h5>
+                        <h2 class="text-primary fw-bold mb-0" data-toggle="counter-up">30</h2>
+                    </div>
+                    <p class="mb-0">На нашем сайте вы можете найти более тридцати курсов </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- About End -->
+
+
+
+    <!-- Service Start -->
+    <div class="container-fluid bg-light my-5 py-6" id="service">
+        <div class="container">
+            <div class="row g-5 mb-5 wow fadeInUp" data-wow-delay="0.1s">
+                <div class="col-lg-6">
+                    <h1 class="display-5 mb-0">Отзывы</h1>
+                </div>
+
+            </div>
+            <div class="row g-4">
+                <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s">
+                    <div class="service-item d-flex flex-column flex-sm-row bg-white rounded h-100 p-4 p-lg-5">
+                        <div class="bg-icon flex-shrink-0 mb-3">
+						<img style = 'border-radius: 50%' src="https://thumb.tildacdn.com/tild3237-6162-4236-a461-613433626364/-/cover/100x100/center/center/-/format/webp/73cbede9-d3b5-44bb-8.jpg" class="step__image">
+                        </div>
+                        <div class="ms-sm-4">
+                            <h4 class="mb-3">Мұхаметқали Айару</h4>
+                            <h6 class="mb-3">   <span class="text-primary">Ученик</span></h6>
+                            <span>В Quantum мне нравится:
+Месторасположение и время проведения курсов (доступность выбора), преподаватели, методика преподавания , атмосфера и уют - главные достоинства центра ! Благодарю всех учителей , которые внесли вклад в мое обучение !</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.3s">
+                                        <div class="service-item d-flex flex-column flex-sm-row bg-white rounded h-100 p-4 p-lg-5">
+                        <div class="bg-icon flex-shrink-0 mb-3">
+						<img style = 'border-radius: 50%' src="https://thumb.tildacdn.com/tild3237-6162-4236-a461-613433626364/-/cover/100x100/center/center/-/format/webp/73cbede9-d3b5-44bb-8.jpg" class="step__image">
+                        </div>
+                        <div class="ms-sm-4">
+                            <h4 class="mb-3">Мұхаметқали Айару</h4>
+                            <h6 class="mb-3">   <span class="text-primary">Ученик</span></h6>
+                            <span>В Quantum мне нравится:
+Месторасположение и время проведения курсов (доступность выбора), преподаватели, методика преподавания , атмосфера и уют - главные достоинства центра ! Благодарю всех учителей , которые внесли вклад в мое обучение !</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s">
+                                       <div class="service-item d-flex flex-column flex-sm-row bg-white rounded h-100 p-4 p-lg-5">
+                        <div class="bg-icon flex-shrink-0 mb-3">
+						<img style = 'border-radius: 50%' src="https://thumb.tildacdn.com/tild3237-6162-4236-a461-613433626364/-/cover/100x100/center/center/-/format/webp/73cbede9-d3b5-44bb-8.jpg" class="step__image">
+                        </div>
+                        <div class="ms-sm-4">
+                            <h4 class="mb-3">Мұхаметқали Айару</h4>
+                            <h6 class="mb-3">   <span class="text-primary">Ученик</span></h6>
+                            <span>В Quantum мне нравится:
+Месторасположение и время проведения курсов (доступность выбора), преподаватели, методика преподавания , атмосфера и уют - главные достоинства центра ! Благодарю всех учителей , которые внесли вклад в мое обучение !</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.3s">
+                                      <div class="service-item d-flex flex-column flex-sm-row bg-white rounded h-100 p-4 p-lg-5">
+                        <div class="bg-icon flex-shrink-0 mb-3">
+						<img style = 'border-radius: 50%' src="https://thumb.tildacdn.com/tild3237-6162-4236-a461-613433626364/-/cover/100x100/center/center/-/format/webp/73cbede9-d3b5-44bb-8.jpg" class="step__image">
+                        </div>
+                        <div class="ms-sm-4">
+                            <h4 class="mb-3">Мұхаметқали Айару</h4>
+                            <h6 class="mb-3">   <span class="text-primary">Ученик</span></h6>
+                            <span>В Quantum мне нравится:
+Месторасположение и время проведения курсов (доступность выбора), преподаватели, методика преподавания , атмосфера и уют - главные достоинства центра ! Благодарю всех учителей , которые внесли вклад в мое обучение !</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Service End -->
+
+
+
+
+
+    <!-- Contact End -->
+
+
+
+
+
+    <!-- Copyright Start -->
+    <div class="container-fluid bg-dark text-white py-4">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                        &copy; <a class="border-bottom text-secondary" href="#">Q-Education</a>
+                    </div>
+                    <div class="col-md-6 text-center text-md-end">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Copyright End -->
+
+
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{% static 'lib/wow/wow.min.js' %}"></script>
+    <script src="{% static 'lib/easing/easing.min.js' %}"></script>
+    <script src="{% static 'lib/waypoints/waypoints.min.js' %}"></script>
+    <script src="{% static 'lib/typed/typed.min.js' %}"></script>
+    <script src="{% static 'lib/counterup/counterup.min.js' %}"></script>
+    <script src="{% static 'lib/owlcarousel/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'lib/isotope/isotope.pkgd.min.js' %}s"></script>
+    <script src="{% static 'lib/lightbox/js/lightbox.min.js' %}s"></script>
+
+    <!-- Template Javascript -->
+    <script src="{% static 'mein.js/main.js' %}"></script>
+</body>
+
+</html>

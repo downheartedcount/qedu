@@ -1,0 +1,43 @@
+{% extends 'dashboard/learner/base.html' %}
+
+{% load static %}
+{% load crispy_forms_tags humanize %}
+
+
+
+{% block body %}
+
+
+<div class="container">
+  <h2 class="mb-3"> Results</h2>
+
+  <div class="sidebar">
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Имя пользователя</th>
+          <th>Время</th>
+          <th>Баллы</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for taken_quiz in taken_quizzes %}
+          <tr>
+            <td>{{ taken_quiz.learner.user.username }}</td>
+            <td>{{ taken_quiz.date|naturaltime }}</td>
+            <td>{{ taken_quiz.score }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+</div>
+<div class="container-fluid" style="padding-top: 20px">
+
+
+    </div>
+
+{% endblock body %}
+

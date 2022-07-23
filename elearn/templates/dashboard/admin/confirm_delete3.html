@@ -1,0 +1,42 @@
+{% extends 'dashboard/admin/base.html' %}
+
+{% block body %}
+<div class="container-fluid">
+        <div class="row">
+          <div class="col-12 mb-3">
+          <div class="col-12 mb-3">
+              <div id="content-wrapper">
+        <div class="container-fluid">
+            <div class="card mb-3">
+                <div class="card-header">
+                    <i class="fas fa-table text-warning"></i>
+                    Удалить курс
+                </div>
+                <div class="card-body">
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }} alert-dismissible" role="alert">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+
+    <div class="row">
+        <div class="col-12">
+            <form method="post">
+                {% csrf_token %}
+                <div class="alert alert-warning" role="alert">
+                  Вы действительно хотите удалить {{ object }} ?
+                </div>
+                <input type="submit" class="btn btn-danger" value="Да, удалить этот курс" />
+                <a class="btn btn-success" href="{% url 'list_course' %}">Нет, отменить действие</a>
+            </form>
+        </div>
+    </div>
+
+                  
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+{% endblock %}

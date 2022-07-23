@@ -1,0 +1,50 @@
+{% extends 'dashboard/admin/base.html' %}
+
+{% block body %}
+
+        <div class="container-fluid">
+        <div class="row">
+          <div class="col-12 mb-3">
+          <div class="col-12 mb-3">
+            
+                <div id="content-wrapper">
+        <div class="container-fluid">
+            <div class="card mb-3">
+                <div class="card-header">
+                    <i class="fas fa-table"></i>
+                    Список пользователей
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                            <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Никнейм</th>
+                                 <th>Никнейм</th>
+
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                        {% if accesses %}
+                            {% for access in accesses %}
+                                <tr>
+                                    <td>{{ access.user }}</td>
+                                    <td>{{ access.course }}</td>
+                                <td>{{ access.date }}</td>
+                                </tr>
+                            {% endfor %}
+                        {% endif %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+                </div>
+          </div>
+          </div>
+        </div>
+        </div>
+                         {% endblock  %}
