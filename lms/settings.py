@@ -23,7 +23,7 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'b*)$+3)4*uqv@gz0+ly_)(2w9(nyv*
 DEBUG = bool(os.environ.get('DJANGO_DEBUG', True))
 
 ALLOWED_HOSTS = ['q-edu.kz', 'www.q-edu.kz']
-CSRF_TRUSTED_ORIGINS = ['http://89.46.34.193', 'q-edu.kz', 'www.q-edu.kz']
+CSRF_TRUSTED_ORIGINS = ['http://89.46.34.193', 'https://q-edu.kz', 'https://www.q-edu.kz']
 # Application definitionp
 
 INSTALLED_APPS = [
