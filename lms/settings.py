@@ -22,7 +22,7 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'b*)$+3)4*uqv@gz0+ly_)(2w9(nyv*
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = bool(os.environ.get('DJANGO_DEBUG', False))
 
-ALLOWED_HOSTS = ['http://89.46.34.193', 'http://server.qeduprod.kz']
+ALLOWED_HOSTS = ['*']
 CSRF_TRUSTED_ORIGINS = ['http://89.46.34.193', 'http://server.qeduprod.kz']
 # Application definitionp
 
