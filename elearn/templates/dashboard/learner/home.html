@@ -23,7 +23,7 @@
                 <div class="col-lg-4 col-md-6 portfolio-item first">
                     <a href="{% url 'course' course.pk %}">
                                             <div class="portfolio-img rounded overflow-hidden">
-                        <img class="img-fluid" src="{{ course.thumb.url}}" alt="">
+                        <img class="img-fluid img-responsive" style = "width: 100%; height: 400px" src="{{ course.thumb.url}}" alt="">
                         <div class="portfolio-btn">
                             <p class = "text-white col-md-7">{{ course.synopsis }}</p>
                             <p class = "text-white col-md-1">Цена: {{ course.cprice }}</p>

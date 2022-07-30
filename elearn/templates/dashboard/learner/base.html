@@ -49,6 +49,7 @@
     </button>
 
     <div class=" collapse navbar-collapse" id="navbarNavDropdown">
+        {% if user.is_learner %}
       <ul class="navbar-nav ms-auto ">
         <li class="nav-item">
             <a class="nav-link mx-2" href="{% url 'mycourses' %}">Мои курсы</a>
@@ -72,6 +73,7 @@
           </ul>
         </li>
       </ul>
+        {% endif %}
     </div>
   </div>
 </nav>

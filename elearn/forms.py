@@ -53,9 +53,17 @@ class CourseForm(forms.ModelForm):
 
 class UserForm(forms.ModelForm):
     email = forms.EmailField(max_length=254, help_text='Required. Inform a valid email address.', required=True)
+
+    def clean(self):
+        email = self.cleaned_data.get('email')
+        if User.objects.filter(email=email).exists():
+            raise ValidationError("Email exists")
+        return self.cleaned_data
+
     class Meta:
         model = User
         fields = ('username', 'first_name', 'last_name', 'email')
+
 
 
 class InstructorSignUpForm(UserCreationForm):
@@ -88,7 +96,11 @@ class LearnerSignUpForm(UserCreationForm):
 
             for fieldname in ['username','email', 'password1', 'password2',]:
                 self.fields[fieldname].help_text = None
-
+    def clean(self):
+        email = self.cleaned_data.get('email')
+        if User.objects.filter(email=email).exists():
+            raise ValidationError("Email exists")
+        return self.cleaned_data
     @transaction.atomic
     def save(self):
         user = super().save(commit=False)

@@ -3,6 +3,12 @@ import logging
 
 import json
 
+from django.contrib.auth.tokens import default_token_generator
+from django.core.mail import send_mail, BadHeaderError
+from django.template.loader import render_to_string
+from django.utils.encoding import force_bytes
+from django.utils.http import urlsafe_base64_encode
+
 from . import signals
 from django.test import TestCase
 
@@ -44,7 +50,7 @@ from django.core.exceptions import ValidationError
 from . import models
 import operator
 import itertools
-from django.db.models import Avg, Count, Sum
+from django.db.models import Avg, Count, Sum, Q
 from django.forms import inlineformset_factory
 from .models import TakenQuiz, Profile, Quiz, Question, Answer, Learner, User, Course, Tutorial, Notes, Announcement, \
     Module, LearnerAnswer, Category, Module, Access
@@ -52,7 +58,7 @@ from django.db import transaction
 from django.contrib.auth.hashers import make_password
 from django.core.files.storage import FileSystemStorage
 from django.contrib.auth.forms import (AuthenticationForm, UserCreationForm,
-                                       PasswordChangeForm)
+                                       PasswordChangeForm, PasswordResetForm)
 
 from django.contrib.auth import update_session_auth_hash
 from elearn.functions import handle_uploaded_file
@@ -167,7 +173,6 @@ class AdminLearner(AdminUserMixin, CreateView):
         return redirect('addlearner')
 
 
-
 def course(request):
     user = User.objects.get(id=request.user.pk)
     if user.is_admin:
@@ -243,7 +248,6 @@ class course_detail(AdminUserMixin, generic.DetailView):
         return context
 
 
-
 def update_course(request, pk):
     user = User.objects.get(id=request.user.pk)
     if user.is_admin:
@@ -252,7 +256,7 @@ def update_course(request, pk):
         template = loader.get_template('dashboard/admin/update_object.html')
         context = {
             'course': course,
-            'categorys':categorys
+            'categorys': categorys
         }
         return HttpResponse(template.render(context, request))
     else:
@@ -318,6 +322,7 @@ class ListUserView(AdminUserMixin, LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         return User.objects.order_by('-id')
+
 
 class AccessList(AdminUserMixin, LoginRequiredMixin, ListView):
     model = Access
@@ -440,6 +445,36 @@ def auser_profile(request):
     return render(request, 'dashboard/learner/user_profile.html', users)
 
 
+def password_reset_request(request):
+    if request.method == "POST":
+        password_reset_form = PasswordResetForm(request.POST)
+        if password_reset_form.is_valid():
+            data = password_reset_form.cleaned_data['email']
+            associated_users = User.objects.filter(Q(email=data))
+            if associated_users.exists():
+                for user in associated_users:
+                    subject = "Password Reset Requested"
+                    email_template_name = "password_reset_email.txt"
+                    c = {
+                        "email": user.email,
+                        'domain': '127.0.0.1:8000',
+                        'site_name': 'Website',
+                        "uid": urlsafe_base64_encode(force_bytes(user.pk)),
+                        "user": user,
+                        'token': default_token_generator.make_token(user),
+                        'protocol': 'http',
+                    }
+                    email = render_to_string(email_template_name, c)
+                    try:
+                        send_mail(subject, email, 'erasylabdulla20@gmail.com', [user.email], fail_silently=False)
+                    except BadHeaderError:
+                        return HttpResponse('Invalid header found.')
+                    return redirect("/password_reset/done/")
+    password_reset_form = PasswordResetForm()
+    return render(request=request, template_name="password_reset.html",
+                  context={"password_reset_form": password_reset_form})
+
+
 # Instructor Views
 def home_instructor(request):
     learner = User.objects.filter(is_learner=True).count()
@@ -453,7 +488,7 @@ def home_instructor(request):
 
 class QuizCreateView(AdminUserMixin, CreateView):
     model = Quiz
-    fields = ('course', )
+    fields = ('course',)
     template_name = 'dashboard/instructor/quiz_add_form.html'
 
     def form_valid(self, form):
@@ -464,7 +499,6 @@ class QuizCreateView(AdminUserMixin, CreateView):
         quiz.save()
         messages.success(self.request, 'Куиз создан! Добавьте вопросы.')
         return redirect('quiz_change', quiz.pk)
-
 
 
 class QuizUpdateView(AdminUserMixin, UpdateView):
@@ -703,9 +737,6 @@ def create_profile(request):
         return render(request, 'dashboard/instructor/create_profile.html', users)
 
 
-
-
-
 def module(request):
     user = User.objects.get(id=request.user.pk)
     if user.is_admin:
@@ -715,6 +746,7 @@ def module(request):
         return render(request, 'dashboard/admin/module.html', context)
     else:
         return render(request, 'dashboard/admin/error.html')
+
 
 def publish_module(request):
     user = User.objects.get(id=request.user.pk)
@@ -737,7 +769,7 @@ def publish_module(request):
 def tutorial(request, pk):
     user = User.objects.get(id=request.user.pk)
     if user.is_admin:
-        modules = Module.objects.filter(id = pk)
+        modules = Module.objects.filter(id=pk)
         context = {'modules': modules}
 
         return render(request, 'dashboard/admin/tutorial.html', context)
@@ -777,12 +809,6 @@ def publish_tutorial(request):
             return render(request, 'dashboard/admin/tutorial.html')
     else:
         return render(request, 'dashboard/admin/error.html')
-
-
-
-
-
-
 
 
 class ITutorialDetail(AdminUserMixin, LoginRequiredMixin, DetailView):
@@ -853,6 +879,7 @@ class ProfView(ListView):
     def get_queryset(self):
         return Course.objects.filter(category__slug=1)
 
+
 class ENT(ListView):
     model = Course
     template_name = 'dashboard/learner/prof_courses.html'
@@ -860,8 +887,6 @@ class ENT(ListView):
 
     def get_queryset(self):
         return Course.objects.filter(category__slug=2)
-
-
 
 
 class LearnerSignUpView(CreateView):
@@ -973,11 +998,11 @@ class TakenQuizListView(ListView):
             .order_by('date').last()
         return queryset
 
+
 class RatingTable(LoginRequiredMixin, DeleteView):
     model = TakenQuiz
     context_object_name = 'quiz'
     template_name = 'dashboard/learner/rating.html'
-
 
     def get_queryset(self):
         return self.request.qu
@@ -1012,8 +1037,9 @@ def take_quiz(request, pk):
                     score = round((correct_answers / total_questions) * 100.0, 2)
                     TakenQuiz.objects.create(learner=learner, quiz=quiz, score=score)
                     if score < 50.0:
-                        messages.warning(request, 'Постарайтесь в следующий раз! Ваш результат по тесту %s %s баллов' % (
-                            quiz.name, score))
+                        messages.warning(request,
+                                         'Постарайтесь в следующий раз! Ваш результат по тесту %s %s баллов' % (
+                                             quiz.name, score))
                     else:
                         messages.success(request,
                                          'Поздравляем! Вы завершили тест %s с результатом %s баллов' % (
