@@ -302,6 +302,7 @@ def updaterecord(request, pk):
         course.cprice = cprice
         course.synopsis = synopsis
         course.trainer = trainer
+
         course.category_id = category_id
         course.save()
         return render(request, 'dashboard/admin/home.html')
