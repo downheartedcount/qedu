@@ -35,7 +35,7 @@ from django.http import HttpResponse, Http404, JsonResponse, HttpResponseBadRequ
 from toml.encoder import unicode
 
 from .forms import TakeQuizForm, LearnerSignUpForm, InstructorSignUpForm, QuestionForm, BaseAnswerInlineFormSet, \
-    UserForm, ProfileForm, PostForm, CourseForm
+    UserForm, ProfileForm, PostForm, CourseForm, UpdateProfileForm
 from django.http import HttpResponseRedirect, HttpResponse
 from django.template import loader
 from django.urls import reverse
@@ -411,30 +411,17 @@ class ADeleteuser(AdminUserMixin, SuccessMessageMixin, DeleteView):
 
 def acreate_profile(request):
     if request.method == 'POST':
-        first_name = request.POST['first_name']
-        last_name = request.POST['last_name']
-        birth_date = request.POST['birth_date']
-        phonenumber = request.POST['phonenumber']
-        city = request.POST['city']
-        country = request.POST['country']
-        avatar = request.FILES['avatar']
-        hobby = request.POST['hobby']
-        current_user = request.user
-        user_id = current_user.id
-        print(user_id)
+        profile_form = UpdateProfileForm(request.POST, request.FILES, instance=request.user.profile)
 
-        Profile.objects.filter(id=user_id).create(user_id=user_id, phonenumber=phonenumber, first_name=first_name,
-                                                  last_name=last_name, hobby=hobby, birth_date=birth_date,
-                                                  avatar=avatar,
-                                                  city=city, country=country)
-        messages.success(request, 'Профиль успешно создан')
-        return redirect('auser_profile')
+        if profile_form.is_valid():
+            profile_form.save()
+            messages.success(request, 'Your profile is updated successfully')
+            return redirect('auser_profile')
     else:
-        current_user = request.user
-        user_id = current_user.id
-        users = Profile.objects.filter(user_id=user_id)
-        users = {'users': users}
-        return render(request, 'dashboard/learner/create_profile.html', users)
+        profile_form = UpdateProfileForm(instance=request.user.profile)
+
+    return render(request, 'dashboard/learner/create_profile.html', {'profile_form': profile_form})
+
 
 
 def auser_profile(request):

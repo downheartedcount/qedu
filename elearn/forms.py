@@ -14,7 +14,7 @@ from django import forms
 from django.shortcuts import render
 
 from elearn.models import (Answer, Question, Learner, LearnerAnswer,
-                           Course, User, Announcement)
+                           Course, User, Announcement, Profile)
 
 import hashlib
 import json
@@ -152,3 +152,10 @@ class TakeQuizForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.fields['answer'].queryset = question.answers.order_by('text')
 
+
+class UpdateProfileForm(forms.ModelForm):
+    avatar = forms.ImageField(widget=forms.FileInput(attrs={'class': 'form-control-file'}))
+
+    class Meta:
+        model = Profile
+        fields = ['avatar']
