@@ -55,6 +55,9 @@ urlpatterns = [
     path('lesson/<int:pk>', views.module, name='itut'),
     path('usercourse/<int:pk>', views.usercourse, name='usercourse'),
     path('courseu/<int:pk>', views.courseu, name='courseu'),
+    path('dusercourse/<int:pk>', views.dusercourse, name='dusercourse'),
+    path('coursed/<int:pk>', views.coursed, name='coursed'),
+
     path('module/', views.module, name='module'),
     path('postmodule/', views.publish_module, name='publish-module'),
 

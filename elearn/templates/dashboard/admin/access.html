@@ -21,7 +21,8 @@
                             <tr>
                                 <th>No</th>
                                 <th>Никнейм</th>
-                                 <th>Никнейм</th>
+                                 <th>Дата регистрации</th>
+                                <th>Время</th>
 
                             </tr>
                             </thead>
@@ -33,6 +34,8 @@
                                     <td>{{ access.user }}</td>
                                     <td>{{ access.course }}</td>
                                 <td>{{ access.date }}</td>
+                                <td>{{ access.date.today }}</td>
+
                                 </tr>
                             {% endfor %}
                         {% endif %}

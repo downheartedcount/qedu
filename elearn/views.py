@@ -363,6 +363,31 @@ def courseu(request, pk):
     else:
         return render(request, 'dashboard/admin/error.html')
 
+def dusercourse(request, pk):
+    user = User.objects.get(id=request.user.pk)
+    if user.is_admin:
+        users = User.objects.get(id=pk)
+        courses = Course.objects.only('id', 'name')
+        context = {'courses': courses, 'users': users}
+
+        return render(request, 'dashboard/admin/dusercourse.html', context)
+    else:
+        return render(request, 'dashboard/admin/error.html')
+
+def coursed(request, pk):
+    user = User.objects.get(id=request.user.pk)
+    if user.is_admin:
+        if request.method == 'POST':
+            course = request.POST['course']
+            a = User(id=pk)
+            a.course_set.remove(course)
+            return redirect('aluser')
+        else:
+            messages.error(request, 'По неизвестной причине, курс не добавлен')
+            return redirect('aluser')
+    else:
+        return render(request, 'dashboard/admin/error.html')
+
 
 class ADeleteuser(AdminUserMixin, SuccessMessageMixin, DeleteView):
     model = User
@@ -864,7 +889,7 @@ class ProfView(ListView):
     context_object_name = 'courses'
 
     def get_queryset(self):
-        return Course.objects.filter(category__slug=1)
+        return Course.objects.filter(category__slug=1, is_shown=True)
 
 
 class ENT(ListView):
@@ -873,7 +898,7 @@ class ENT(ListView):
     context_object_name = 'courses'
 
     def get_queryset(self):
-        return Course.objects.filter(category__slug=2)
+        return Course.objects.filter(category__slug=2, is_shown=True)
 
 
 class LearnerSignUpView(CreateView):

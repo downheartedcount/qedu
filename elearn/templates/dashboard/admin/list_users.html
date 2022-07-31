@@ -31,6 +31,8 @@
                                 <th>Email</th>
                                 <th>Удалить</th>
                                 <th>Добавить курс</th>
+                                <th>Удалить курс</th>
+
 
                             </tr>
                             </thead>
@@ -53,6 +55,8 @@
           <a href="{% url 'aduser' user.pk %}"><button type="button" class="btn btn-danger"> Удалить</button></a></td>
                                         <td>
           <a href="{% url 'usercourse' user.pk %}"><button type="button" class="btn btn-danger"> Добавить курс</button></a></td>
+                                <td>
+          <a href="{% url 'dusercourse' user.pk %}"><button type="button" class="btn btn-danger"> Удалить курс</button></a></td>
                                 </tr>
                             {% endfor %}
                         {% endif %}
