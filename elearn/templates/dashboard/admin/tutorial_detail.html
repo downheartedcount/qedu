@@ -24,7 +24,8 @@
                   <h2 class="card-title"></h2>
                   <p class="card-text" id="textarea">{{ object.content }}</p>
                </div>
-                <a href="{{ tutorial.task }}">Задание</a>
+                <a href="{{ invoice.task.url }}"><i class="fas fa-eye"></i>Задание</a>
+
                 <tbody>
         {% for quiz in quizzes %}
           <tr>

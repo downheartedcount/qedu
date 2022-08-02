@@ -84,7 +84,7 @@ class Tutorial(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     video = EmbedVideoField(blank=True, null=True)
-    task = models.URLField(blank=True, null=True)
+    task = models.FileField(blank=True, null=True)
 
     def __str__(self):
         return self.title
