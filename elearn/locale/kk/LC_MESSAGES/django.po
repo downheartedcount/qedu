@@ -1,0 +1,331 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-08-02 19:43+0600\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n"
+
+#: .\templates\dashboard\learner\_header.html:7
+msgid "Тесты"
+msgstr "Тесттер"
+
+#: .\templates\dashboard\learner\base.html:56
+#: .\templates\dashboard\learner\mycourses.html:9
+#: .\templates\dashboard\learner\mycourses.html:15
+#: .\templates\dashboard\learner\user_profile.html:55
+msgid "Мои курсы"
+msgstr "Менің курстарым"
+
+#: .\templates\dashboard\learner\base.html:59
+msgid "Профессиональные курсы"
+msgstr "Кәсіби курстар"
+
+#: .\templates\dashboard\learner\base.html:62
+msgid "Курсы ЕНТ"
+msgstr "ЕНТ курстары"
+
+#: .\templates\dashboard\learner\base.html:72
+msgid "Выйти"
+msgstr "Шығу"
+
+#: .\templates\dashboard\learner\base.html:95
+msgid "Контакты"
+msgstr "Контактілер"
+
+#: .\templates\dashboard\learner\congrats.html:10
+msgid "Чтобы оплатить через kaspi.kz необходимо:"
+msgstr "Kaspi.kz арқылы төлем жасау үшін:"
+
+#: .\templates\dashboard\learner\congrats.html:13
+msgid "Платежи - в поиске q-edu.kz"
+msgstr "Төлемдер - іздеуде q-edu.kz теріңіз"
+
+#: .\templates\dashboard\learner\congrats.html:14
+msgid "Найти желаемый курс"
+msgstr "Қалаған курсты табыңыз"
+
+#: .\templates\dashboard\learner\congrats.html:15
+msgid ""
+"Жалғастыру түймесін басыңыз, соманы тексеріңіз, төлейтін шотты таңдаңыз "
+"бонустарды қолдана аласыз"
+msgstr ""
+
+#: .\templates\dashboard\learner\congrats.html:16
+msgid "Төлемге өтіп, \"растас және төлеу\" батырмасын басыңыз"
+msgstr ""
+
+#: .\templates\dashboard\learner\congrats.html:21
+msgid "Продолжить"
+msgstr "Жалғастыру"
+
+#: .\templates\dashboard\learner\course.html:26
+msgid "Автор курса"
+msgstr "Курс авторы"
+
+#: .\templates\dashboard\learner\course.html:29
+msgid "Уроки"
+msgstr "Сабақтар"
+
+#: .\templates\dashboard\learner\course.html:32
+msgid "Купить"
+msgstr "Сатып алу"
+
+#: .\templates\dashboard\learner\create_profile.html:30
+msgid "Изменить фото профиля"
+msgstr "Суретті өзгерту"
+
+#: .\templates\dashboard\learner\create_profile.html:36
+#: .\templates\dashboard\learner\create_profile.html:63
+msgid "Сохранить"
+msgstr "Сақтау"
+
+#: .\templates\dashboard\learner\create_profile.html:52
+msgid "Прикрепить фото"
+msgstr "Фото суретті тіркеңіз"
+
+#: .\templates\dashboard\learner\create_profile.html:58
+msgid "Выберите фото пользователя"
+msgstr "Суретті таңдаңыз"
+
+#: .\templates\dashboard\learner\home.html:16
+#: .\templates\dashboard\learner\prof_courses.html:33 .\templates\home.html:157
+msgid "Курсы"
+msgstr "Курстар"
+
+#: .\templates\dashboard\learner\home.html:30
+msgid "Цена:"
+msgstr "Бағасы:"
+
+#: .\templates\dashboard\learner\home.html:31
+#: .\templates\dashboard\learner\prof_courses.html:47
+msgid "Автор"
+msgstr "Автор:"
+
+#: .\templates\dashboard\learner\lesson.html:33
+msgid "Перейти к заданию"
+msgstr "Тапсырмаға өту"
+
+#: .\templates\dashboard\learner\lesson.html:44
+msgid "Сдать тест"
+msgstr "Тест тапсыру"
+
+#: .\templates\dashboard\learner\mycourses.html:13
+msgid "Домой"
+msgstr "Басты"
+
+#: .\templates\dashboard\learner\mycourses.html:39
+msgid "Учить"
+msgstr "Сабаққа өту"
+
+#: .\templates\dashboard\learner\prof_courses.html:46
+msgid "Цена"
+msgstr "Бағасы"
+
+#: .\templates\dashboard\learner\rating.html:13
+msgid "Результаты"
+msgstr "Нәтижелер"
+
+#: .\templates\dashboard\learner\rating.html:20
+#, fuzzy
+#| msgid "Добро пожаловать"
+msgid "Имя пользователя"
+msgstr "Қош келдіңіз"
+
+#: .\templates\dashboard\learner\rating.html:21
+msgid "Дата"
+msgstr "Күні"
+
+#: .\templates\dashboard\learner\rating.html:22
+msgid "Баллы"
+msgstr "Баллдар"
+
+#: .\templates\dashboard\learner\take_quiz_form.html:39
+msgid "Следующий"
+msgstr "Келесі"
+
+#: .\templates\dashboard\learner\taken_quiz_list.html:7
+msgid "Вы ответили на все вопросы"
+msgstr "Сіз барлық сұраққа жауап бердіңіз"
+
+#: .\templates\dashboard\learner\taken_quiz_list.html:10
+msgid "Урок"
+msgstr "Сабақ"
+
+#: .\templates\dashboard\learner\taken_quiz_list.html:12
+msgid "по курсу"
+msgstr "курс"
+
+#: .\templates\dashboard\learner\taken_quiz_list.html:14
+msgid "Вы набрали"
+msgstr "Сіз жинадыңыз"
+
+#: .\templates\dashboard\learner\taken_quiz_list.html:14
+msgid "баллов"
+msgstr "балл"
+
+#: .\templates\dashboard\learner\taken_quiz_list.html:22
+msgid "Главная"
+msgstr "Басты"
+
+#: .\templates\dashboard\learner\user_profile.html:32
+#: .\templates\dashboard\learner\user_profile.html:34
+msgid "Изменить"
+msgstr "Өзгерту"
+
+#: .\templates\dashboard\learner\user_profile.html:41
+msgid "Мой профиль"
+msgstr "Менің профилім"
+
+#: .\templates\home.html:60 .\templates\home.html:85 .\templates\nav.html:18
+#: .\templates\signup_form.html:19
+msgid "Регистрация"
+msgstr "Тіркелу"
+
+#: .\templates\home.html:66 .\templates\home.html:86 .\templates\login.html:25
+#: .\templates\nav.html:19
+msgid "Войти"
+msgstr "Кіру"
+
+#: .\templates\home.html:81
+msgid "Добро пожаловать"
+msgstr "Қош келдіңіз"
+
+#: .\templates\home.html:83
+msgid "Онлайн обучение, Подготовка к ЕНТ, Профессиональные курсы"
+msgstr "Онлайн білім алу, ҰБТ-ға дайындық, Кәсіби курстар"
+
+#: .\templates\home.html:91
+msgid "Ознакомительное видео"
+msgstr "Кіріспе бейнеролик"
+
+#: .\templates\home.html:132
+msgid "лет"
+msgstr "жыл"
+
+#: .\templates\home.html:134
+msgid "продуктивной работы в сфере подготовки учеников"
+msgstr "студенттерді оқыту саласындағы өнімді еңбек"
+
+#: .\templates\home.html:136
+msgid ""
+"Наша команда не просто профи, а фанатики своего дела, миссия которых - успех "
+"каждого ученика"
+msgstr "Біздің команда жай ғана кәсіпқойлар емес, өз саласының фанаттары, олардың мақсаты – әрбір"
+"студенттің жетістігі."
+
+
+#: .\templates\home.html:137
+msgid "Приемлемые цены"
+msgstr "Жетімді бағалар"
+
+#: .\templates\home.html:138
+msgid "Высокое качество материала"
+msgstr "Жоғары сапалы оқу материалы"
+
+#: .\templates\home.html:139
+msgid "Интересный учебный процесс"
+msgstr "Қызықты оқу процессі"
+
+#: .\templates\home.html:140
+msgid "Узнать больше"
+msgstr "Көбірек білу"
+
+#: .\templates\home.html:152
+msgid "Ученики"
+msgstr "Оқушылар"
+
+#: .\templates\home.html:155
+msgid "Уже больше тысячи учеников прошли наши курсы"
+msgstr "Мыңнан астам оқушылар біздің курстардан өтті"
+
+#: .\templates\home.html:160
+msgid "На нашем сайте вы можете найти более тридцати курсов"
+msgstr "Біздің сайтта сіз отыздан астам курс таба аласыз"
+
+#: .\templates\home.html:174
+msgid "Отзывы"
+msgstr "Пікірлер"
+
+#: .\templates\home.html:184 .\templates\home.html:195
+#: .\templates\home.html:217
+msgid "Ученик"
+msgstr "Оқушы"
+
+#: .\templates\login.html:16
+msgid "Войдите в ваш аккаунт"
+msgstr "Аккаунқа кіріңіз"
+
+#: .\templates\login.html:17
+msgid "Заполните все поля"
+msgstr "Барлығын толтырыңыз"
+
+#: .\templates\login.html:23
+msgid "Пароль"
+msgstr "Құпия сөз"
+
+#: .\templates\login.html:29
+msgid "Забыли пароль?"
+msgstr "Құпия сөзді ұмыттыңыз ба?"
+
+#: .\templates\password_reset.html:12
+#: .\templates\password_reset_confirm.html:16
+msgid "Сбросить пароль"
+msgstr "Құпия сөзді өзгерту"
+
+#: .\templates\password_reset.html:14
+msgid "Забыли пароль? Введите вашу почту и мы пришлем вам инструкции"
+msgstr "Өз поштаңызды енгізіңіз, біз сізге нұсқаулар жібереміз"
+
+#: .\templates\password_reset.html:18
+msgid "Отправить письмо"
+msgstr "Хат жіберу"
+
+#: .\templates\password_reset_complete.html:8
+msgid "Пароль сброшен"
+msgstr "Құпия сөз қалпына келтірілді"
+
+#: .\templates\password_reset_complete.html:10
+msgid "Ваш пароль успешно восстановлен"
+msgstr "Сіздің құпия сөз қалпына келтірілді"
+
+#: .\templates\password_reset_confirm.html:10
+msgid "Потвердите сброс пароля"
+msgstr "Растау"
+
+#: .\templates\password_reset_confirm.html:12
+msgid "Пожалуйста введите новый пароль"
+msgstr "Жаңа құпия сөзді енгізіңіз"
+
+#: .\templates\password_reset_done.html:9
+msgid "Инструкции высланы"
+msgstr "Нұсқаулар жіберілді"
+
+#: .\templates\password_reset_done.html:11
+msgid ""
+"Мы отправили вам инструкции по установке пароля, если существует учетная "
+"запись с введенным вами адресом электронной почты. Вы должны получить их в "
+"ближайшее время."
+msgstr ""
+
+#: .\templates\password_reset_done.html:12
+msgid ""
+"Если вы не получили электронное письмо, убедитесь, что вы ввели адрес, "
+"который вы указали при регистрации, и проверьте папку со спамом."
+msgstr ""
+
+#: .\templates\signup_form.html:24
+msgid "Зарегистрироваться"
+msgstr "Тіркелу"

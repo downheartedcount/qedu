@@ -1,0 +1,181 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-08-02 19:46+0600\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n"
+
+#: .\_header.html:7
+msgid "Тесты"
+msgstr ""
+
+#: .\base.html:56 .\mycourses.html:9 .\mycourses.html:15 .\user_profile.html:55
+msgid "Мои курсы"
+msgstr "Менің курстарым"
+
+#: .\base.html:59
+msgid "Профессиональные курсы"
+msgstr ""
+
+#: .\base.html:62
+msgid "Курсы ЕНТ"
+msgstr ""
+
+#: .\base.html:72
+msgid "Выйти"
+msgstr ""
+
+#: .\base.html:95
+msgid "Контакты"
+msgstr ""
+
+#: .\congrats.html:10
+msgid "Чтобы оплатить через kaspi.kz необходимо:"
+msgstr ""
+
+#: .\congrats.html:13
+msgid "Платежи - в поиске q-edu.kz"
+msgstr ""
+
+#: .\congrats.html:14
+msgid "Найти желаемый курс"
+msgstr ""
+
+#: .\congrats.html:15
+msgid ""
+"Нажмите продолжить, проверьте сумму, выберите счет для оплаты, можете "
+"потратить бонусы"
+msgstr ""
+
+#: .\congrats.html:16
+msgid "Нажмите \"к оплате\", потом \"подтвердить и оплатить\""
+msgstr ""
+
+#: .\congrats.html:21
+msgid "Продолжить"
+msgstr ""
+
+#: .\course.html:26
+msgid "Автор курса"
+msgstr ""
+
+#: .\course.html:29
+msgid "Уроки"
+msgstr ""
+
+#: .\course.html:32
+msgid "Купить"
+msgstr ""
+
+#: .\create_profile.html:30
+msgid "Изменить фото профиля"
+msgstr ""
+
+#: .\create_profile.html:36 .\create_profile.html:63
+msgid "Сохранить"
+msgstr ""
+
+#: .\create_profile.html:52
+msgid "Прикрепить фото"
+msgstr ""
+
+#: .\create_profile.html:58
+msgid "Выберите фото пользователя"
+msgstr ""
+
+#: .\home.html:16 .\prof_courses.html:33
+msgid "Курсы"
+msgstr ""
+
+#: .\home.html:30
+msgid "Цена:"
+msgstr ""
+
+#: .\home.html:31 .\prof_courses.html:47
+msgid "Автор"
+msgstr ""
+
+#: .\lesson.html:33
+msgid "Перейти к заданию"
+msgstr "Тапсырмаға көшу"
+
+#: .\lesson.html:44
+msgid "Сдать тест"
+msgstr ""
+
+#: .\mycourses.html:13
+msgid "Домой"
+msgstr ""
+
+#: .\mycourses.html:39
+msgid "Учить"
+msgstr ""
+
+#: .\prof_courses.html:46
+msgid "Цена"
+msgstr ""
+
+#: .\rating.html:13
+msgid "Результаты"
+msgstr ""
+
+#: .\rating.html:20
+msgid "Имя пользователя"
+msgstr ""
+
+#: .\rating.html:21
+msgid "Дата"
+msgstr ""
+
+#: .\rating.html:22
+msgid "Баллы"
+msgstr ""
+
+#: .\take_quiz_form.html:39
+msgid "Следующий"
+msgstr ""
+
+#: .\taken_quiz_list.html:7
+msgid "Вы ответили на все вопросы"
+msgstr ""
+
+#: .\taken_quiz_list.html:10
+msgid "Урок"
+msgstr ""
+
+#: .\taken_quiz_list.html:12
+msgid "по курсу"
+msgstr ""
+
+#: .\taken_quiz_list.html:14
+msgid "Вы набрали"
+msgstr ""
+
+#: .\taken_quiz_list.html:14
+msgid "баллов"
+msgstr ""
+
+#: .\taken_quiz_list.html:22
+msgid "Главная"
+msgstr ""
+
+#: .\user_profile.html:32 .\user_profile.html:34
+msgid "Изменить"
+msgstr ""
+
+#: .\user_profile.html:41
+msgid "Мой профиль"
+msgstr ""

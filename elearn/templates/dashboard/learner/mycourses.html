@@ -1,17 +1,18 @@
 {% extends 'dashboard/learner/base.html' %}
+{% load i18n %}
 
 {% block body %}
 
 <section class="py-2">
             <div class="container">
 <div class="pb-2 mb-4">
-    <h1 class="">Мои курсы</h1>
+    <h1 class="">{% trans 'Мои курсы' %}</h1>
     <!-- Breadcrumb -->
     <nav class="d-flex">
       <h6 class="mb-0">
-        <a href="" class="text-reset">Домой</a>
+        <a href="" class="text-reset">{% trans 'Домой' %}</a>
         <span>/</span>
-        <a href="" class="text-reset">Мои курсы</a>
+        <a href="" class="text-reset">{% trans 'Мои курсы' %}</a>
 
       </h6>
     </nav>
@@ -35,13 +36,14 @@
                             </div>
                             <!-- Product actions-->
                             <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="{% url 'course' course.pk%}">Учить</a></div>
+                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="{% url 'course' course.pk%}">{% trans 'Учить' %}</a></div>
                             </div>
                         </div>
                     </div>
                     {% endfor %}
                 {% endif %}
                 </div>
+            </div>
             </div>
         </section>
 

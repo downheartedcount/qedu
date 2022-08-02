@@ -1,4 +1,5 @@
 {% extends 'dashboard/learner/base.html' %}
+{% load i18n %}
 
 {% load static %}
 {% load crispy_forms_tags humanize %}
@@ -9,16 +10,16 @@
 
 
 <div class="container">
-  <h2 class="mb-3"> Results</h2>
+  <h2 class="mb-3"> {% trans 'Результаты' %}</h2>
 
   <div class="sidebar">
 
     <table class="table">
       <thead>
         <tr>
-          <th>Имя пользователя</th>
-          <th>Время</th>
-          <th>Баллы</th>
+          <th>{% trans 'Имя пользователя' %}</th>
+          <th>{% trans 'Дата' %}</th>
+          <th>{% trans 'Баллы' %}</th>
         </tr>
       </thead>
       <tbody>

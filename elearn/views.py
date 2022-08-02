@@ -4,6 +4,7 @@ import logging
 import json
 
 from django.contrib.auth.tokens import default_token_generator
+from django.contrib.auth.views import PasswordResetView
 from django.core.mail import send_mail, BadHeaderError
 from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes
@@ -79,18 +80,6 @@ def home(request):
     return render(request, 'home.html')
 
 
-def about(request):
-    return render(request, 'about.html')
-
-
-def services(request):
-    return render(request, 'service.html')
-
-
-def contact(request):
-    return render(request, 'contact.html')
-
-
 def login_form(request):
     return render(request, 'login.html')
 
@@ -143,34 +132,6 @@ class AdminUserMixin(LoginRequiredMixin, UserPassesTestMixin):
         return render(self.request, 'dashboard/admin/error.html')
 
 
-class InstructorSignUpView(AdminUserMixin, CreateView):
-    model = User
-    form_class = InstructorSignUpForm
-    template_name = 'dashboard/admin/signup_form.html'
-
-    def get_context_data(self, **kwargs):
-        kwargs['user_type'] = 'instructor'
-        return super().get_context_data(**kwargs)
-
-    def form_valid(self, form):
-        user = form.save()
-        messages.success(self.request, 'Instructor Was Added Successfully')
-        return redirect('isign')
-
-
-class AdminLearner(AdminUserMixin, CreateView):
-    model = User
-    form_class = LearnerSignUpForm
-    template_name = 'dashboard/admin/learner_signup_form.html'
-
-    def get_context_data(self, **kwargs):
-        kwargs['user_type'] = 'learner'
-        return super().get_context_data(**kwargs)
-
-    def form_valid(self, form):
-        user = form.save()
-        messages.success(self.request, 'Ученик удачно добавлен')
-        return redirect('addlearner')
 
 
 def course(request):
@@ -363,6 +324,7 @@ def courseu(request, pk):
     else:
         return render(request, 'dashboard/admin/error.html')
 
+
 def dusercourse(request, pk):
     user = User.objects.get(id=request.user.pk)
     if user.is_admin:
@@ -373,6 +335,7 @@ def dusercourse(request, pk):
         return render(request, 'dashboard/admin/dusercourse.html', context)
     else:
         return render(request, 'dashboard/admin/error.html')
+
 
 def coursed(request, pk):
     user = User.objects.get(id=request.user.pk)
@@ -434,19 +397,35 @@ class ADeleteuser(AdminUserMixin, SuccessMessageMixin, DeleteView):
     success_message = "Пользователь успешно удален"
 
 
+def createprofile(request):
+    if request.method == 'POST':
+        avatar = request.FILES['avatar']
+        current_user = request.user
+        user_id = current_user.id
+        print(user_id)
+        Profile.objects.filter(id=user_id).create(user_id=user_id, avatar=avatar)
+        messages.success(request, 'Профиль успешно создан')
+        return redirect('auser_profile')
+    else:
+        current_user = request.user
+        user_id = current_user.id
+        users = Profile.objects.filter(user_id=user_id)
+        users = {'users': users}
+        return render(request, 'dashboard/learner/create_profile.html', users)
+
+
 def acreate_profile(request):
     if request.method == 'POST':
         profile_form = UpdateProfileForm(request.POST, request.FILES, instance=request.user.profile)
-
         if profile_form.is_valid():
             profile_form.save()
             messages.success(request, 'Your profile is updated successfully')
             return redirect('auser_profile')
     else:
+
         profile_form = UpdateProfileForm(instance=request.user.profile)
 
     return render(request, 'dashboard/learner/create_profile.html', {'profile_form': profile_form})
-
 
 
 def auser_profile(request):
@@ -457,45 +436,8 @@ def auser_profile(request):
     return render(request, 'dashboard/learner/user_profile.html', users)
 
 
-def password_reset_request(request):
-    if request.method == "POST":
-        password_reset_form = PasswordResetForm(request.POST)
-        if password_reset_form.is_valid():
-            data = password_reset_form.cleaned_data['email']
-            associated_users = User.objects.filter(Q(email=data))
-            if associated_users.exists():
-                for user in associated_users:
-                    subject = "Password Reset Requested"
-                    email_template_name = "password_reset_email.txt"
-                    c = {
-                        "email": user.email,
-                        'domain': 'q-edu.kz',
-                        'site_name': 'Quantum Education',
-                        "uid": urlsafe_base64_encode(force_bytes(user.pk)),
-                        "user": user,
-                        'token': default_token_generator.make_token(user),
-                        'protocol': 'https',
-                    }
-                    email = render_to_string(email_template_name, c)
-                    try:
-                        send_mail(subject, email, 'erasylabdulla20@gmail.com', [user.email], fail_silently=False)
-                    except BadHeaderError:
-                        return HttpResponse('Invalid header found.')
-                    return redirect("/password_reset/done/")
-    password_reset_form = PasswordResetForm()
-    return render(request=request, template_name="password_reset.html",
-                  context={"password_reset_form": password_reset_form})
-
-
 # Instructor Views
-def home_instructor(request):
-    learner = User.objects.filter(is_learner=True).count()
-    instructor = User.objects.filter(is_instructor=True).count()
-    course = Course.objects.all().count()
-    users = User.objects.all().count()
-    context = {'learner': learner, 'course': course, 'instructor': instructor, 'users': users}
 
-    return render(request, 'dashboard/instructor/home.html', context)
 
 
 class QuizCreateView(AdminUserMixin, CreateView):
@@ -710,43 +652,8 @@ class QuizUpdateView(AdminUserMixin, UpdateView):
         return reverse('quiz_change', kwargs={'pk': self.object.pk})
 
 
-def user_profile(request):
-    current_user = request.user
-    user_id = current_user.id
-    print(user_id)
-    users = Profile.objects.filter(user_id=user_id)
-    users = {'users': users}
-    return render(request, 'dashboard/instructor/user_profile.html', users)
 
 
-def create_profile(request):
-    if request.method == 'POST':
-        first_name = request.POST['first_name']
-        last_name = request.POST['last_name']
-        phonenumber = request.POST['phonenumber']
-        bio = request.POST['bio']
-        city = request.POST['city']
-        country = request.POST['country']
-        birth_date = request.POST['birth_date']
-        avatar = request.FILES['avatar']
-        current_user = request.user
-        user_id = current_user.id
-        thumb = request.FILES['thumb']
-
-        print(user_id)
-
-        Profile.objects.filter(id=user_id).create(user_id=user_id, first_name=first_name, last_name=last_name,
-                                                  phonenumber=phonenumber, bio=bio, city=city, country=country,
-                                                  birth_date=birth_date, avatar=avatar, thumb=thumb)
-        messages.success(request, 'Profile was created successfully')
-        return redirect('user_profile')
-    else:
-        current_user = request.user
-        user_id = current_user.id
-        print(user_id)
-        users = Profile.objects.filter(user_id=user_id)
-        users = {'users': users}
-        return render(request, 'dashboard/instructor/create_profile.html', users)
 
 
 def module(request):
@@ -940,10 +847,6 @@ class scourse(generic.DetailView):
         return context
 
 
-def ltutorial(request):
-    tutorials = Tutorial.objects.all().order_by('-created_at')
-    tutorials = {'tutorials': tutorials}
-    return render(request, 'dashboard/learner/list_tutorial.html', tutorials)
 
 
 def luser_profile(request):
@@ -983,9 +886,7 @@ def lcreate_profile(request):
         return render(request, 'dashboard/learner/create_profile.html', users)
 
 
-class LTutorialDetail(LoginRequiredMixin, DetailView):
-    model = Tutorial
-    template_name = 'dashboard/learner/tutorial_detail.html'
+
 
 
 class Lesson(LoginRequiredMixin, DetailView):
@@ -1032,6 +933,7 @@ def take_quiz(request, pk):
     unanswered_questions = learner.get_unanswered_questions(quiz)
     total_unanswered_questions = unanswered_questions.count()
     progress = 100 - round(((total_unanswered_questions - 1) / total_questions) * 100)
+    qnumber = 100 - round(((total_unanswered_questions - 1) / total_questions) * 100)
     question = unanswered_questions.first()
 
     if request.method == 'POST':
@@ -1064,7 +966,9 @@ def take_quiz(request, pk):
         'quiz': quiz,
         'question': question,
         'form': form,
-        'progress': progress
+        'progress': progress,
+        'qnumber': round(qnumber / 100 * total_questions),
+        'total_ques': total_questions
     })
 
 
@@ -1086,12 +990,39 @@ def showmycourses(request):
         return render(request, 'dashboard')
 
 
-def checkout(request, pk):
-    course = Course.objects.get(id=pk)
-    context = {'course': course}
-    return render(request, 'dashboard/learner/checkout.html', context)
+
 
 
 def paymentComplete(request, pk):
     Course.objects.get(id=pk)
     return render(request, 'dashboard/learner/congrats.html')
+
+
+def password_reset_request(request):
+    if request.method == "POST":
+        password_reset_form = PasswordResetForm(request.POST)
+        if password_reset_form.is_valid():
+            data = password_reset_form.cleaned_data['email']
+            associated_users = User.objects.filter(Q(email=data))
+            if associated_users.exists():
+                for user in associated_users:
+                    subject = "Password Reset Requested"
+                    email_template_name = "password_reset_email.txt"
+                    c = {
+                        "email": user.email,
+                        'domain': '127.0.0.1:8000',
+                        'site_name': 'Website',
+                        "uid": urlsafe_base64_encode(force_bytes(user.pk)),
+                        "user": user,
+                        'token': default_token_generator.make_token(user),
+                        'protocol': 'http',
+                    }
+                    email = render_to_string(email_template_name, c)
+                    try:
+                        send_mail(subject, email, 'erasylabdulla20@yandex.kz', [user.email], fail_silently=False)
+                    except BadHeaderError:
+                        return HttpResponse('Invalid header found.')
+                    return redirect("/password_reset/done/")
+    password_reset_form = PasswordResetForm()
+    return render(request=request, template_name="password_reset.html",
+                  context={"password_reset_form": password_reset_form})

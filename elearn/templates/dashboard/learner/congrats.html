@@ -1,4 +1,5 @@
 {% extends 'dashboard/learner/base.html' %}
+{% load i18n %}
 
 {% block body %}
 <div class="container">
@@ -6,18 +7,18 @@
              <div class="text-right cross"> </div>
              <div class="card-body text-center"> <img src="https://papik.pro/uploads/posts/2021-11/thumbs/1636228688_3-papik-pro-p-kaspi-logotip-foto-3.png">
                  <hr>
-                 <h4>Чтобы оплатить через Kaspi.kz необходимо:</h4>
+                 <h4>{% trans 'Чтобы оплатить через kaspi.kz необходимо:' %}</h4>
 
                 <ol type="1">
-                    <li> Платежи - в поиске qedu.kz</li>
-                    <li>Найти желаемый курс</li>
-                 <li>Нажмите продолжить, проверьте сумму, выберите счет для оплаты, можете потратить бонусы </li>
-                 <li>Нажмите "к оплате", потом "подтвердить и оплатить"</li>
+                    <li> {% trans 'Платежи - в поиске q-edu.kz' %}</li>
+                    <li>{% trans 'Найти желаемый курс' %}</li>
+                 <li>{% trans 'Нажмите продолжить, проверьте сумму, выберите счет для оплаты, можете потратить бонусы'%} </li>
+                 <li>{% trans 'Нажмите "к оплате", потом "подтвердить и оплатить"'%}</li>
                 </ol>
 
 
 
-                        <a href="{% url 'mycourses' %}">Продолжить</a></button>
+                        <a href="{% url 'mycourses' %}">{% trans 'Продолжить' %}</a></button>
              </div>
          </div>
 

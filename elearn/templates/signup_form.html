@@ -1,3 +1,5 @@
+{% load crispy_forms_filters %}
+{% load i18n %}
 {% load static %}
 
 
@@ -14,12 +16,12 @@
 				</div>
     <div class="auth__auth">
       <form  method="post" novalidate role="presentation" class="form">
-     <h2 class="text-primary">Регистрация</h2>
+     <h2 class="text-primary">{% trans 'Регистрация' %}</h2>
 
         {% csrf_token %}
         <input type="hidden" name="next" value="{{ next }}">
         {{ form|crispy }}
-        <button type="submit" class="btn btn-success">Зарегистрироваться</button>
+        <button type="submit" class="btn btn-success">{% trans 'Зарегистрироваться' %}</button>
       </form>
        <div class="card-footer">
         <div class="d-flex justify-content-center">

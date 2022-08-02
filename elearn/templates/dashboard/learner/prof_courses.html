@@ -1,4 +1,5 @@
 {% extends 'dashboard/learner/base.html' %}
+{% load i18n %}
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
 {% block body %}
 {% load static %}
@@ -29,7 +30,7 @@
         <div class="container">
             <div class="row g-5 mb-5 align-items-center wow fadeInUp" data-wow-delay="0.1s">
                 <div class="col-lg-6">
-                    <h1 class="display-5 mb-0">Курсы</h1>
+                    <h1 class="display-5 mb-0">{% trans 'Курсы' %}</h1>
                 </div>
             </div>
                     <div class="row g-4 portfolio-container wow fadeInUp" data-wow-delay="0.1s">
@@ -42,8 +43,8 @@
                         <img class="img-fluid" style = "width: 100%; height: 400px" src="{{ course.thumb.url}}" alt="">
                         <div class="portfolio-btn">
                             <p class = "text-white col-md-7">{{ course.synopsis }}</p>
-                            <p class = "text-white col-md-1">Цена: {{ course.cprice }}</p>
-                            <p class = "text-white px-5">Автор: {{ course.trainer }}</p>
+                            <p class = "text-white col-md-1">{% trans 'Цена' %}: {{ course.cprice }}</p>
+                            <p class = "text-white px-5">{% trans 'Автор' %}: {{ course.trainer }}</p>
 
                         </div>
                     </div>

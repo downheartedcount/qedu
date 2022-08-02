@@ -4,9 +4,12 @@ Django settings for lms project.
 Developed using Django 3.2.
 """
 import os
+import smtplib
+import ssl
 from pathlib import Path
-import django_heroku
+
 import dj_database_url
+import django_heroku
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -104,15 +107,15 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
-
+LANGUAGE_CODE = 'kk'
+LOCALE_PATHS = (BASE_DIR + 'elearn/locale/', BASE_DIR + 'elearn/templates/dashboard/learner', )
 TIME_ZONE = 'UTC'
 
 DATETIME_FORMAT = 'Y-m-d'
 
 USE_I18N = True
 
-USE_L10N = False
+USE_L10N = True
 
 USE_TZ = True
 
@@ -142,9 +145,11 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
 # LOGIN_URL = 'login_form'
-EMAIL_BACKEND = 'django_ses.SESBackend'
-AWS_ACCESS_KEY_ID = 'AKIARXTSVTMKJQBBBUHW'
-AWS_SECRET_ACCESS_KEY = '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'
-AWS_SES_REGION_NAME = 'us-east-1' #(ex: us-east-2)
-AWS_SES_REGION_ENDPOINT ='email.us-east-1.amazonaws.com' #(ex: email.us-east-2.amazonaws.com)
-
+EMAIL_HOST = 'smtp.yandex.kz'
+EMAIL_PORT = 465
+EMAIL_HOST_USER = "erasylabdulla20@yandex.kz"
+EMAIL_HOST_PASSWORD = "Erasyl1520"
+EMAIL_USE_TLS = False
+EMAIL_USE_SSL = True
+SERVER_EMAIL = EMAIL_HOST_USER
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER

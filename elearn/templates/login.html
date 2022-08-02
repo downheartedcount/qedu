@@ -1,3 +1,4 @@
+{% load i18n %}
 {% load static %}
 {% include 'nav.html' %}
 
@@ -12,20 +13,20 @@
 					<img src={% static 'img/quantum.png' %}>
 				</div>
 				<div class="auth__auth">
-					<h1 class="auth__title">Войдите в ваш аккаунт</h1>
-					<p>Заполните все поля</p>
+					<h1 class="auth__title">{% trans 'Войдите в ваш аккаунт' %}</h1>
+					<p>{% trans 'Заполните все поля' %}</p>
 					<form action="{% url 'login' %}" method="POST" autocompelete="new-password" role="presentation" class="form">
                         {% csrf_token %}
 						<input name="email" class="fakefield">
 						<label>Username</label>
 						<input type="text" name="username" id='email' placeholder="quantum">
-						<label>Пароль</label>
+						<label>{% trans 'Пароль' %}</label>
 						<input type="password" name="password" id='password' placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;" autocomplete="off">
-						<button type='submit' class="button button__accent">Войти</button>
+						<button type='submit' class="button button__accent">{% trans 'Войти' %}</button>
 
 					</form>
                     <div>
-                        <p><a href="{% url 'password_reset' %}">Забыли пароль?</a></p>
+                        <p><a href="{% url 'password_reset' %}">{% trans 'Забыли пароль?' %}</a></p>
                     </div>
 				</div>
                  <div class="card-footer">

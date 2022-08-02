@@ -1,3 +1,4 @@
+{% load i18n %}
 {% load static %}
 <!DOCTYPE html>
 <html>
@@ -52,13 +53,13 @@
         {% if user.is_learner %}
       <ul class="navbar-nav ms-auto ">
         <li class="nav-item">
-            <a class="nav-link mx-2" href="{% url 'mycourses' %}">Мои курсы</a>
+            <a class="nav-link mx-2" href="{% url 'mycourses' %}">{% trans 'Мои курсы' %}</a>
         </li>
           <li class="nav-item">
-                  <a class="nav-link mx-2" aria-current="page" href="{% url 'profcourses' %}">Профессиональные курсы</a>
+                  <a class="nav-link mx-2" aria-current="page" href="{% url 'profcourses' %}">{% trans 'Профессиональные курсы' %}</a>
           </li>
         <li class="nav-item">
-          <a class="nav-link mx-2" href="{% url 'entcourses' %}">Курсы ЕНТ</a>
+          <a class="nav-link mx-2" href="{% url 'entcourses' %}">{% trans 'Курсы ЕНТ' %}</a>
         </li>
       </ul>
       <ul class="navbar-nav ms-auto d-none d-lg-inline-flex">
@@ -68,7 +69,7 @@
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
             <li><a class="dropdown-item" href={% url 'auser_profile' %}>Аккаунт</a></li>
-            <li><a class="dropdown-item" href={% url 'logout' %}>Выйти</a></li>
+            <li><a class="dropdown-item" href={% url 'logout' %}>{% trans 'Выйти' %}</a></li>
             <li><a class="dropdown-item" href="#"></a></li>
           </ul>
         </li>
@@ -91,7 +92,7 @@
  <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
           <!-- Links -->
           <h6 class="text-uppercase fw-bold mb-4">
-            Контакты
+            {% trans 'Контакты' %}
           </h6>
           <p><i class="fas fa-home me-3"></i> Quantum Group</p>
           <p>
@@ -106,7 +107,7 @@
       <!-- Grid row -->
     </div>
   <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
-    © 2020 Copyright
+    © 2022 Copyright
   </div>
   <!-- Copyright -->
 </footer>

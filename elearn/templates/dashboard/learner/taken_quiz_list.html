@@ -1,23 +1,27 @@
 {% extends 'dashboard/learner/base.html' %}
+{% load i18n %}
 {% block body %}
     </style>
 <div class="container">
 	<div class="congrats">
-		<h1>Вы успешно сдали тест!</h1>
+		<h1>{% trans 'Вы ответили на все вопросы' %}</h1>
 {% if taken_quizzes %}
           <tr>
-             Урок: <td>{{ taken_quizzes.quiz.tutorial }} </td>
+             {% trans 'Урок' %}: <td>{{ taken_quizzes.quiz.tutorial }} </td>
               <br>
-            по курсу <td>{{ taken_quizzes.quiz.course.name }}</td>
+            {% trans 'по курсу' %} <td>{{ taken_quizzes.quiz.course.name }}</td>
               <br>
-          Вы набрали  <td>{{ taken_quizzes.score }}</td> баллов <br>
+          {% trans 'Вы набрали' %}  <td>{{ taken_quizzes.score }}</td> {% trans 'баллов' %} <br>
+              <br>
+              <td> {{ taken_quizzes.quiz.questions.count }}</td>
               <br>
           <td>{{ taken_quizzes.date }}</td>
               <br>
           </tr>
          <td class="text-right">
-              <a href="{% url 'mycourses' %}" class="btn">Главная</a>
+              <a href="{% url 'mycourses' %}" class="btn">{% trans 'Главная' %}</a>
             </td>
 {% endif %}
+</div>
 </div>
 {% endblock body %}

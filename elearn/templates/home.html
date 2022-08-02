@@ -1,8 +1,9 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    {% load static %}
+{% load i18n %}
     <meta charset="utf-8">
     <title>Quantum Education</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -53,13 +54,13 @@
         </button>
         <div class="collapse navbar-collapse justify-content-between py-4 py-lg-0" id="navbarCollapse">
             <div class="navbar-nav ms-auto py-0">
-                <a href="{% url 'lsign' %}" class="nav-item nav-link active">Регистрация</a>
+                <a href="{% url 'lsign' %}" class="nav-item nav-link active">{% trans 'Регистрация' %}</a>
             </div>
             <a href="{% url 'home' %}" class="navbar-brand bg-secondary py-3 px-4 mx-3 d-none d-lg-block bg-light">
                 <h1 class="text-primary fw-bold m-0">Q-Edu</h1>
             </a>
             <div class="navbar-nav me-auto py-0">
-                <a href="{% url 'login_form' %}" class="nav-item nav-link">Войти</a>
+                <a href="{% url 'login_form' %}" class="nav-item nav-link">{% trans 'Войти' %}</a>
             </div>
         </div>
     </nav>
@@ -74,17 +75,17 @@
         <div class="container">
             <div class="row g-5 align-items-center" >
                 <div class="col-lg-6 py-6 pb-0 pt-lg-0">
-                    <h3 class="text-primary mb-3">Добро пожаловать</h3>
+                    <h3 class="text-primary mb-3">{% trans 'Добро пожаловать' %}</h3>
                     <h1 class="display-3 mb-3">Q-Education</h1>
-                    <div class="">Онлайн обучение, Подготовка к ЕНТ, Профессиональные курсы</div>
+                    <div class="">{% trans 'Онлайн обучение, Подготовка к ЕНТ, Профессиональные курсы'%}</div>
                     <div class="d-flex align-items-center pt-5">
-                        <a href="{% url 'lsign' %}" class="btn btn-primary py-3 px-4 me-5">Регистрация</a>
-                         <a href="{% url 'login_form' %}" class="btn btn-primary py-3 px-4 me-5">Войти</a>
+                        <a href="{% url 'lsign' %}" class="btn btn-primary py-3 px-4 me-5">{% trans 'Регистрация' %}</a>
+                         <a href="{% url 'login_form' %}" class="btn btn-primary py-3 px-4 me-5">{% trans 'Войти' %}</a>
                         <button type="button" class="btn-play" data-bs-toggle="modal"
                             data-src="https://www.youtube.com/embed/DWRcNpR6Kdc" data-bs-target="#videoModal">
                             <span></span>
                         </button>
-                        <h5 class="ms-4 mb-0 d-none d-sm-block">Ознакомительное видео</h5>
+                        <h5 class="ms-4 mb-0 d-none d-sm-block">{% trans 'Ознакомительное видео' %}</h5>
                     </div>
                 </div>
                 <div class="col-lg-6">
@@ -125,15 +126,15 @@
                     <div class="d-flex align-items-center mb-5">
                         <div class="years flex-shrink-0 text-center me-4">
                             <h1 class="display-1 mb-0">7</h1>
-                            <h5 class="mb-5">лет</h5>
+                            <h5 class="mb-5">{% trans 'лет' %}</h5>
                         </div>
-                        <h3 class="lh-base mb-0">продуктивной работы в сфере подготовки учеников</h3>
+                        <h3 class="lh-base mb-0">{% trans 'продуктивной работы в сфере подготовки учеников' %}</h3>
                     </div>
-                    <p class="mb-4">Наша команда не просто профи, а фанатики своего дела, миссия которых - успех каждого ученика</p>
-                    <p class="mb-3"><i class="far fa-check-circle text-primary me-3"></i>Приемлемые цены</p>
-                    <p class="mb-3"><i class="far fa-check-circle text-primary me-3"></i>Высокое качество материала</p>
-                    <p class="mb-3"><i class="far fa-check-circle text-primary me-3"></i>Интересный учебный процесс</p>
-                    <a class="btn btn-primary py-3 px-5 mt-3" href="https://schoolquantum.kz/">Узнать больше</a>
+                    <p class="mb-4">{% trans 'Наша команда не просто профи, а фанатики своего дела, миссия которых - успех каждого ученика'%}</p>
+                    <p class="mb-3"><i class="far fa-check-circle text-primary me-3"></i>{% trans 'Приемлемые цены' %}</p>
+                    <p class="mb-3"><i class="far fa-check-circle text-primary me-3"></i>{% trans 'Высокое качество материала' %}</p>
+                    <p class="mb-3"><i class="far fa-check-circle text-primary me-3"></i>{% trans 'Интересный учебный процесс' %}</p>
+                    <a class="btn btn-primary py-3 px-5 mt-3" href="https://schoolquantum.kz/">{% trans 'Узнать больше' %}</a>
                 </div>
                 <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.5s">
                     <div class="row g-3 mb-4">
@@ -145,15 +146,15 @@
                         </div>
                     </div>
                     <div class="d-flex align-items-center mb-3">
-                        <h5 class="border-end pe-3 me-3 mb-0">Ученики</h5>
+                        <h5 class="border-end pe-3 me-3 mb-0">{% trans 'Ученики' %}</h5>
                         <h2 class="text-primary fw-bold mb-0" data-toggle="counter-up">1236</h2>
                     </div>
-                    <p class="mb-4">Уже больше тысячи учеников прошли наши курсы</p>
+                    <p class="mb-4">{% trans 'Уже больше тысячи учеников прошли наши курсы'%}</p>
                     <div class="d-flex align-items-center mb-3">
-                        <h5 class="border-end pe-3 me-3 mb-0">Курсы</h5>
+                        <h5 class="border-end pe-3 me-3 mb-0">{% trans 'Курсы' %}</h5>
                         <h2 class="text-primary fw-bold mb-0" data-toggle="counter-up">30</h2>
                     </div>
-                    <p class="mb-0">На нашем сайте вы можете найти более тридцати курсов </p>
+                    <p class="mb-0">{% trans 'На нашем сайте вы можете найти более тридцати курсов'%} </p>
                 </div>
             </div>
         </div>
@@ -167,7 +168,7 @@
         <div class="container">
             <div class="row g-5 mb-5 wow fadeInUp" data-wow-delay="0.1s">
                 <div class="col-lg-6">
-                    <h1 class="display-5 mb-0">Отзывы</h1>
+                    <h1 class="display-5 mb-0">{% trans 'Отзывы' %}</h1>
                 </div>
 
             </div>
@@ -177,7 +178,7 @@
 
                         <div class="ms-sm-4">
                             <h4 class="mb-3">Молдағапас Айдана</h4>
-                            <h6 class="mb-3">   <span class="text-primary">Ученик</span></h6>
+                            <h6 class="mb-3">   <span class="text-primary">{% trans 'Ученик' %}</span></h6>
                             <span>В Quantum мне нравится:
 Quantum білім беру орталығы❤️ Бұл орталық тек жай ғана білім беріп емес, сонымен қоса общение,дружба,креативке толыы жас мамандар беретін ең позитивті орталық❤️ Мен былтыр 11 сынып түлегі ретінде Quantum ды таңдағаныма еш өкінбеймін☺️ Керісінше қазір сол жердегі достарымды,ағайларымды жанеде сол жердегі атмосфераны ерекшее сағынамын                            </span>
                         </div>
@@ -188,7 +189,7 @@ Quantum білім беру орталығы❤️ Бұл орталық тек 
 
                         <div class="ms-sm-4">
                             <h4 class="mb-3">Мұхаметқали Айару</h4>
-                            <h6 class="mb-3">   <span class="text-primary">Ученик</span></h6>
+                            <h6 class="mb-3">   <span class="text-primary">{% trans 'Ученик' %}</span></h6>
                             <span>В Quantum мне нравится:
 Месторасположение и время проведения курсов (доступность выбора), преподаватели, методика преподавания , атмосфера и уют - главные достоинства центра ! Благодарю всех учителей , которые внесли вклад в мое обучение !</span>
                         </div>
@@ -210,7 +211,7 @@ Quantum білім беру орталығы❤️ Бұл орталық тек 
 
                         <div class="ms-sm-4">
                             <h4 class="mb-3">Айым Ескендір</h4>
-                            <h6 class="mb-3">   <span class="text-primary">Ученик</span></h6>
+                            <h6 class="mb-3">   <span class="text-primary">{% trans 'Ученик' %}</span></h6>
                             <span>В Quantum мне нравится:
 Quantum это место где скрытые таланты раскрываются.А учителя всегда поддержат тебя,всегда готовы послушать и дать совет.И Quantum это не только образовательный центр,но и там есть разные развивающие курсы и развлекательные программы.Вообщем Quantum это сила!!                            </span>
                         </div>

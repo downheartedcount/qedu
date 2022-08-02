@@ -70,7 +70,7 @@ class Course(models.Model):
 
 
 class Module(models.Model):
-    name = models.CharField(max_length=30)
+    name = models.CharField(max_length=100)
     course = models.ForeignKey(Course, on_delete=models.CASCADE, default='')
 
     def __str__(self):

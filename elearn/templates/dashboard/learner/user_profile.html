@@ -1,4 +1,5 @@
 {% extends 'dashboard/learner/base.html' %}
+{% load i18n %}
 {% load static %}
 
 
@@ -15,23 +16,29 @@
     <div class="row">
         <div class="col-md-3 border-right">
             <div class="d-flex flex-column align-items-center text-center p-3 py-5">
-                           {% if users %}
-               {% for user in users %}
-                              {% if user.avatar %}
+            {% if users %}
+                {% for user in users %}
+                            {% if user.avatar %}
                <img src="{{ user.avatar.url }}" alt="{{ user.username }}" class = 'img-thumbnail'>
-               {% else %}
-               <p>No image</p>
                {% endif %}
+                {% endfor %}
+            {% else %}
+               <img src="{% static 'img/bb.png' %}" alt="{{ user.username }}" class = 'img-thumbnail'>
+
+            {% endif %}
+
                 <span class="text-black-50">
-                    <a href={% url 'acreate_profile' %}>Изменить</a>
+                    {% if user.profile %}
+                        <a href={% url 'acreate_profile' %}>{% trans 'Изменить' %}</a>
+                        {% else %}
+                        <a href = {% url 'profile' %}>{% trans 'Изменить' %}</a>
+                    {% endif %}
             </span><span> </span></div>
-        {% endfor %}
-        {% endif %}
-        </div>
+            </div>
         <div class="col-md-5 border-right">
             <div class="p-3 py-5">
                 <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h4 class="text-right">Мой профиль</h4>
+                    <h4 class="text-right">{% trans 'Мой профиль' %}</h4>
                 </div>
                 <div class="row mt-2">
                     <div class="col-md-6"><label class="labels">Username</label><label type="text" class="form-control" placeholder="first name" value="">{{ user.username }}</label></div>
@@ -45,7 +52,7 @@
         </div>
         <div class="col-md-4">
             <div class="p-3 py-5">
-                <div class="d-flex justify-content-between align-items-center experience"><span></span><span class="border px-3 p-1 add-experience"><i class="fa fa-plus"></i>&nbsp;Мои курсы</span></div><br>
+                <div class="d-flex justify-content-between align-items-center experience"><span></span><span class="border px-3 p-1 add-experience"><i class="fa fa-plus"></i>{% trans 'Мои курсы' %}</span></div><br>
                 {{ taken_quizzes }}
 
             </div>
@@ -75,10 +82,6 @@
 
 
 
-
-
-
-{{ user.email }}
 
 
 
