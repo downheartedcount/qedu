@@ -74,6 +74,14 @@
           </ul>
         </li>
       </ul>
+            {% else %}
+                  <ul class="navbar-nav ms-auto d-none d-lg-inline-flex">
+               <li class="nav-item dropdown">
+          <a class="nav-link mx-2" href="{% url 'lsign' %}"  aria-expanded="false">
+           Регистрация
+          </a>
+        </li>
+      </ul>
         {% endif %}
     </div>
   </div>

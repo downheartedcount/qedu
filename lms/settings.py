@@ -54,6 +54,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.locale.LocaleMiddleware'
 ]
 
 ROOT_URLCONF = 'lms.urls'
@@ -107,7 +108,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
-LANGUAGE_CODE = 'kk'
+LANGUAGE_CODE = 'ru-RU'
 LOCALE_PATHS = (BASE_DIR + 'elearn/locale/', BASE_DIR + 'elearn/templates/dashboard/learner', )
 TIME_ZONE = 'UTC'
 

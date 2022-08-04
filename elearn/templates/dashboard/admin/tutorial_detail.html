@@ -11,6 +11,7 @@
             <p class="text-justify">
                {{ tutorial.title }}
                 <a href="{% url 'update_tutorial' tutorial.pk %}"><button type="button" class="btn btn-danger">Обновить</button></a></td>
+                <a href="{% url 'addfile' tutorial.pk %}"><button type="button" class="btn btn-danger">Загрузить задание</button></a></td>
 
             </p>
          </div>
@@ -24,17 +25,23 @@
                   <h2 class="card-title"></h2>
                   <p class="card-text" id="textarea">{{ object.content }}</p>
                </div>
-                <a href="{{ invoice.task.url }}"><i class="fas fa-eye"></i>Задание</a>
+                {% if tutorial.task %}
+                                    <a href="{{ object.task.url }}"><i class="fas fa-eye"></i>Задание</a>
+
+                {% else %}
+                                    <a href="{{ object.task }}"><i class="fas fa-eye"></i>Задание</a>
+
+                {% endif %}
 
                 <tbody>
         {% for quiz in quizzes %}
           <tr>
-            <td class="align-middle"><a href="{% url 'quiz_change' quiz.pk %}">{{ quiz.tutorial.title}}</a></td>
+            <td class="align-middle"><a href="{% url 'quiz_change' quiz.pk %}">{{ quiz.tutorial.title}} (изменить тест)</a></td>
             <td class="align-middle">{{ quiz.subject.get_html_badge }}</td>
             <td class="align-middle">{{ quiz.questions_count }}</td>
             <td class="align-middle">{{ quiz.taken_count }}</td>
             <td class="text-right">
-              <a href="{% url 'quiz_results' quiz.pk %}" class="btn btn-primary">Посмотреть результаты</a>
+              <a href="{% url 'quiz_results' quiz.pk %}" class="btn btn-primary">Посмотреть результаты по тесту</a>
             </td>
           </tr>
         {% empty %}

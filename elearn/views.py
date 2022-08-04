@@ -131,6 +131,15 @@ class AdminUserMixin(LoginRequiredMixin, UserPassesTestMixin):
     def handle_no_permission(self):
         return render(self.request, 'dashboard/admin/error.html')
 
+class LearnerMixin(LoginRequiredMixin, UserPassesTestMixin):
+
+    def test_func(self):
+        user = User.objects.get(id=self.request.user.pk)
+        return user.is_learner
+
+    def handle_no_permission(self):
+        return render(self.request, 'dashboard/admin/error.html')
+
 
 
 
@@ -404,7 +413,6 @@ def createprofile(request):
         user_id = current_user.id
         print(user_id)
         Profile.objects.filter(id=user_id).create(user_id=user_id, avatar=avatar)
-        messages.success(request, 'Профиль успешно создан')
         return redirect('auser_profile')
     else:
         current_user = request.user
@@ -419,7 +427,6 @@ def acreate_profile(request):
         profile_form = UpdateProfileForm(request.POST, request.FILES, instance=request.user.profile)
         if profile_form.is_valid():
             profile_form.save()
-            messages.success(request, 'Your profile is updated successfully')
             return redirect('auser_profile')
     else:
 
@@ -712,8 +719,8 @@ def publish_tutorial(request):
                 video = request.POST['video']
             else:
                 video = None
-            if 'task' in request.POST:
-                task = request.POST['task']
+            if 'task' in request.FILES:
+                task = request.FILES['task']
             else:
                 task = None
 
@@ -788,9 +795,35 @@ def updatetutor(request, pk):
     else:
         return render(request, 'dashboard/admin/error.html')
 
+def add_file(request, pk):
+    user = User.objects.get(id=request.user.pk)
+    if user.is_admin:
+        tutorial = Tutorial.objects.get(id=pk)
+        template = loader.get_template('dashboard/admin/addfile.html')
+        context = {
+            'tutorial': tutorial,
+        }
+        return HttpResponse(template.render(context, request))
+    else:
+        return render(request, 'dashboard/admin/error.html')
+
+def addfile(request, pk):
+    user = User.objects.get(id=request.user.pk)
+    if user.is_admin:
+        if 'task' in request.FILES:
+            task = request.FILES['task']
+        else:
+            task = None
+
+        tutorial = Tutorial.objects.get(id=pk)
+        tutorial.task = task
+        tutorial.save()
+        return redirect('list_course')
+    else:
+        return render(request, 'dashboard/admin/error.html')
 
 # Learner Views
-class ProfView(ListView):
+class ProfView(LearnerMixin,ListView):
     model = Course
     template_name = 'dashboard/learner/prof_courses.html'
     context_object_name = 'courses'
@@ -799,7 +832,7 @@ class ProfView(ListView):
         return Course.objects.filter(category__slug=1, is_shown=True)
 
 
-class ENT(ListView):
+class ENT(LearnerMixin, ListView):
     model = Course
     template_name = 'dashboard/learner/prof_courses.html'
     context_object_name = 'courses'
@@ -824,7 +857,7 @@ class LearnerSignUpView(CreateView):
         return redirect('learner')
 
 
-class ShopView(LoginRequiredMixin, ListView):
+class ShopView(ListView):
     model = Course
     template_name = 'dashboard/learner/home.html'
     context_object_name = 'courses'
@@ -922,54 +955,50 @@ class RatingTable(LoginRequiredMixin, DeleteView):
 
 
 def take_quiz(request, pk):
-    quiz = get_object_or_404(Quiz, pk=pk)
-    learner = request.user.learner
 
-    if learner.quizzes.filter(pk=pk).exists():
-        LearnerAnswer.objects.filter(student=learner).delete()
-        TakenQuiz.objects.filter(learner=learner, quiz=quiz).delete()
+        quiz = get_object_or_404(Quiz, pk=pk)
+        learner = request.user.learner
 
-    total_questions = quiz.questions.count()
-    unanswered_questions = learner.get_unanswered_questions(quiz)
-    total_unanswered_questions = unanswered_questions.count()
-    progress = 100 - round(((total_unanswered_questions - 1) / total_questions) * 100)
-    qnumber = 100 - round(((total_unanswered_questions - 1) / total_questions) * 100)
-    question = unanswered_questions.first()
+        if learner.quizzes.filter(pk=pk).exists():
+            LearnerAnswer.objects.filter(student=learner).delete()
+            TakenQuiz.objects.filter(learner=learner, quiz=quiz).delete()
+        if quiz.course in request.user.course_set.all():
 
-    if request.method == 'POST':
-        form = TakeQuizForm(question=question, data=request.POST)
-        if form.is_valid():
-            with transaction.atomic():
-                learner_answer = form.save(commit=False)
-                learner_answer.student = learner
-                learner_answer.save()
-                if learner.get_unanswered_questions(quiz).exists():
-                    return redirect('take_quiz', pk)
-                else:
-                    correct_answers = learner.quiz_answers.filter(answer__question__quiz=quiz,
-                                                                  answer__is_correct=True).count()
-                    score = round((correct_answers / total_questions) * 100.0, 2)
-                    TakenQuiz.objects.create(learner=learner, quiz=quiz, score=score)
-                    if score < 50.0:
-                        messages.warning(request,
-                                         'Постарайтесь в следующий раз! Ваш результат по тесту %s %s баллов' % (
-                                             quiz.name, score))
-                    else:
-                        messages.success(request,
-                                         'Поздравляем! Вы завершили тест %s с результатом %s баллов' % (
-                                             quiz.name, score))
-                    return redirect('taken_quiz_list')
-    else:
-        form = TakeQuizForm(question=question)
+            total_questions = quiz.questions.count()
+            unanswered_questions = learner.get_unanswered_questions(quiz)
+            total_unanswered_questions = unanswered_questions.count()
+            progress = 100 - round(((total_unanswered_questions - 1) / total_questions) * 100)
+            qnumber = 100 - round(((total_unanswered_questions - 1) / total_questions) * 100)
+            question = unanswered_questions.first()
 
-    return render(request, 'dashboard/learner/take_quiz_form.html', {
-        'quiz': quiz,
-        'question': question,
-        'form': form,
-        'progress': progress,
-        'qnumber': round(qnumber / 100 * total_questions),
-        'total_ques': total_questions
-    })
+            if request.method == 'POST':
+                form = TakeQuizForm(question=question, data=request.POST)
+                if form.is_valid():
+                    with transaction.atomic():
+                        learner_answer = form.save(commit=False)
+                        learner_answer.student = learner
+                        learner_answer.save()
+                        if learner.get_unanswered_questions(quiz).exists():
+                            return redirect('take_quiz', pk)
+                        else:
+                            correct_answers = learner.quiz_answers.filter(answer__question__quiz=quiz,
+                                                                          answer__is_correct=True).count()
+                            score = round((correct_answers / total_questions) * 100.0, 2)
+                            TakenQuiz.objects.create(learner=learner, quiz=quiz, score=score)
+                            return redirect('taken_quiz_list')
+            else:
+                form = TakeQuizForm(question=question)
+
+            return render(request, 'dashboard/learner/take_quiz_form.html', {
+                'quiz': quiz,
+                'question': question,
+                'form': form,
+                'progress': progress,
+                'qnumber': round(qnumber / 100 * total_questions),
+                'total_ques': total_questions
+            })
+        else:
+            return render(request, 'dashboard/admin/error.html')
 
 
 def buycourse(request, pk):
