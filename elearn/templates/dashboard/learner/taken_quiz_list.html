@@ -1,27 +1,63 @@
 {% extends 'dashboard/learner/base.html' %}
 {% load i18n %}
 {% block body %}
-    </style>
+</style>
 <div class="container">
-	<div class="congrats">
-		<h1>{% trans 'Вы ответили на все вопросы' %}</h1>
-{% if taken_quizzes %}
-          <tr>
-             {% trans 'Урок' %}: <td>{{ taken_quizzes.quiz.tutorial }} </td>
-              <br>
-            {% trans 'по курсу' %} <td>{{ taken_quizzes.quiz.course.name }}</td>
-              <br>
-          {% trans 'Вы набрали' %}  <td>{{ taken_quizzes.score }}</td> {% trans 'баллов' %} <br>
-              <br>
-              <td> {{ taken_quizzes.quiz.questions.count }}</td>
-              <br>
-          <td>{{ taken_quizzes.date }}</td>
-              <br>
-          </tr>
-         <td class="text-right">
-              <a href="{% url 'mycourses' %}" class="btn">{% trans 'Главная' %}</a>
-            </td>
-{% endif %}
+   <div class="congrats">
+      <h1>{% trans 'Вы ответили на все вопросы' %}</h1>
+      {% if taken_quizzes %}
+      <tr>
+         {% trans 'Урок' %}:
+         <td>{{ taken_quizzes.quiz.tutorial }} </td>
+         <br>
+         {% trans 'по курсу' %}
+         <td>{{ taken_quizzes.quiz.course.name }}</td>
+         <br>
+         {% trans 'Вы набрали' %}
+         <td>{{ taken_quizzes.score }}</td>
+         {% trans 'баллов' %} <br>
+         <br>
+          Вы ответили на
+         <td> {{ taken_quizzes.correct }}</td>
+          вопроса из
+          <td> {{ taken_quizzes.quiz.questions.count }}</td>
+          <br>
+          <br>
+          <a href={% url 'rating' taken_quizzes.quiz.pk %}><button class = bg-white>Рейтинг по данному тесту</button></a>
+      </tr>
+          <br>
+          <br>
+      {% endif %}
+
+<div class="table-responsive">
+    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+        <thead>
+            <tr>
+                <th>Вопрос</th>
+                <th>Ответ</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for answer in answers %}
+                <tr>
+                <td>{{ answer.answer.question.text }}</td>
+                <td>{{ answer.answer.text }}</td>
+                {% if answer.answer.is_correct %}
+                    <td class = 'bg-success'>Правильно</td>
+                    {% else %}
+                    <td class = 'bg-warning'>Неправильно</td>
+                {% endif %}
+                </tr>
+            {% endfor %}
+
+        </tbody>
+    </table>
 </div>
+
+      <td class="text-right">
+         <a href="{% url 'mycourses' %}" class="btn">{% trans 'Главная' %}</a>
+      </td>
+   </div>
 </div>
 {% endblock body %}

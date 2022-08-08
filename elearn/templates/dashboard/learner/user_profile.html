@@ -53,9 +53,14 @@
         <div class="col-md-4">
             <div class="p-3 py-5">
                 <div class="d-flex justify-content-between align-items-center experience"><span></span><span class="border px-3 p-1 add-experience"><i class="fa fa-plus"></i>{% trans 'Мои курсы' %}</span></div><br>
-                {{ taken_quizzes }}
+                {% for cours in courses %}
+                    {{ cours.synopsis }}
+                {% endfor %}
+
+
 
             </div>
+
         </div>
     </div>
 </div>

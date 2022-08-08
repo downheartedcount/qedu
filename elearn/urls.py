@@ -18,7 +18,8 @@ urlpatterns = [
     path('logout/', views.logoutView, name='logout'),
     path('prof/', views.ProfView.as_view(), name='profcourses'),
     path('ent/', views.ENT.as_view(), name='entcourses'),
-    path('quiz/<int:pk>/rating', views.RatingTable.as_view(), name='rating'),
+    path('demo/', views.Demo.as_view(), name='demo'),
+
     path('access', views.AccessList.as_view(), name='access'),
     path("password_reset", views.password_reset_request, name="password_reset"),
     path('password_reset/done/',
@@ -36,8 +37,6 @@ urlpatterns = [
     path('post_course/', views.post_course, name='post_course'),
     path('aluser/', views.ListUserView.as_view(), name='aluser'),
     path('aduser/<int:pk>', views.ADeleteuser.as_view(), name='aduser'),
-    path('create_user_form/', views.create_user_form, name='create_user_form'),
-    path('create_user/', views.create_user, name='create_user'),
     path('acreate_profile/', views.acreate_profile, name='acreate_profile'),
     path('profile/', views.createprofile, name='profile'),
 
@@ -74,12 +73,13 @@ urlpatterns = [
     path('quiz/<int:pk>/results/', views.QuizResultsView.as_view(), name='quiz_results'),
     path('quiz/<int:pk>/delete/', views.QuizDeleteView.as_view(), name='quiz_delete'),
     path('quizupdate/<int:pk>/', views.QuizUpdateView.as_view(), name='quiz_change'),
+    path('rating/<int:pk>', views.Rating.as_view(), name='rating'),
 
     # Learner URl's
     path('learner/', views.ShopView.as_view(), name='learner'),
     path('luser_profile/', views.luser_profile, name='luser_profile'),
     path('lcreate_profile/', views.lcreate_profile, name='lcreate_profile'),
-    path('taken/', views.TakenQuizListView.as_view(), name='taken_quiz_list'),
+    path('taken/<int:pk>', views.TakenQuizListView.as_view(), name='taken_quiz_list'),
     path('quiz/<int:pk>/', views.take_quiz, name='take_quiz'),
     path('shop/', views.ShopView.as_view(), name='shop'),
     path('courses/<int:pk>', views.scourse.as_view(), name='course'),

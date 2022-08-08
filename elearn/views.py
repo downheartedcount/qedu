@@ -131,6 +131,7 @@ class AdminUserMixin(LoginRequiredMixin, UserPassesTestMixin):
     def handle_no_permission(self):
         return render(self.request, 'dashboard/admin/error.html')
 
+
 class LearnerMixin(LoginRequiredMixin, UserPassesTestMixin):
 
     def test_func(self):
@@ -139,8 +140,6 @@ class LearnerMixin(LoginRequiredMixin, UserPassesTestMixin):
 
     def handle_no_permission(self):
         return render(self.request, 'dashboard/admin/error.html')
-
-
 
 
 def course(request):
@@ -446,7 +445,6 @@ def auser_profile(request):
 # Instructor Views
 
 
-
 class QuizCreateView(AdminUserMixin, CreateView):
     model = Quiz
     fields = ('course',)
@@ -595,9 +593,6 @@ class QuizResultsView(AdminUserMixin, DeleteView):
         kwargs.update(extra_context)
         return super().get_context_data(**kwargs)
 
-    def get_queryset(self):
-        return self.request.user.quizzes.all()
-
 
 class QuizDeleteView(AdminUserMixin, DeleteView):
     model = Quiz
@@ -657,10 +652,6 @@ class QuizUpdateView(AdminUserMixin, UpdateView):
 
     def get_success_url(self):
         return reverse('quiz_change', kwargs={'pk': self.object.pk})
-
-
-
-
 
 
 def module(request):
@@ -795,6 +786,7 @@ def updatetutor(request, pk):
     else:
         return render(request, 'dashboard/admin/error.html')
 
+
 def add_file(request, pk):
     user = User.objects.get(id=request.user.pk)
     if user.is_admin:
@@ -806,6 +798,7 @@ def add_file(request, pk):
         return HttpResponse(template.render(context, request))
     else:
         return render(request, 'dashboard/admin/error.html')
+
 
 def addfile(request, pk):
     user = User.objects.get(id=request.user.pk)
@@ -822,8 +815,9 @@ def addfile(request, pk):
     else:
         return render(request, 'dashboard/admin/error.html')
 
+
 # Learner Views
-class ProfView(LearnerMixin,ListView):
+class ProfView(LearnerMixin, ListView):
     model = Course
     template_name = 'dashboard/learner/prof_courses.html'
     context_object_name = 'courses'
@@ -839,6 +833,15 @@ class ENT(LearnerMixin, ListView):
 
     def get_queryset(self):
         return Course.objects.filter(category__slug=2, is_shown=True)
+
+
+class Demo(LearnerMixin, ListView):
+    model = Course
+    template_name = 'dashboard/learner/prof_courses.html'
+    context_object_name = 'courses'
+
+    def get_queryset(self):
+        return Course.objects.filter(category__slug=3, is_shown=True)
 
 
 class LearnerSignUpView(CreateView):
@@ -880,15 +883,14 @@ class scourse(generic.DetailView):
         return context
 
 
-
-
 def luser_profile(request):
     current_user = request.user
     user_id = current_user.id
     print(user_id)
     user = request.user
     taken_quiz = TakenQuiz.objects.get(learner=user)
-    users = {'users': user, 'taken_quizzes': taken_quiz}
+    cours = Course.objects.get(students__learner=user)
+    users = {'users': user, 'taken_quizzes': taken_quiz, 'courses': cours, }
     return render(request, 'dashboard/learner/user_profile.html', users)
 
 
@@ -919,9 +921,6 @@ def lcreate_profile(request):
         return render(request, 'dashboard/learner/create_profile.html', users)
 
 
-
-
-
 class Lesson(LoginRequiredMixin, DetailView):
     model = Tutorial
     template_name = 'dashboard/learner/lesson.html'
@@ -933,72 +932,90 @@ class Lesson(LoginRequiredMixin, DetailView):
         return context
 
 
-class TakenQuizListView(ListView):
+class TakenQuizListView(LearnerMixin, ListView):
     model = TakenQuiz.objects.order_by('-pk')
     context_object_name = 'taken_quizzes'
     template_name = 'dashboard/learner/taken_quiz_list.html'
 
     def get_queryset(self):
         queryset = self.request.user.learner.taken_quizzes \
-            .select_related('quiz', 'quiz__course') \
+            .select_related('quiz', 'quiz__course', 'quiz', ) \
             .order_by('date').last()
         return queryset
 
+    def get_context_data(self, **kwargs):
+        quiz = Question.objects.filter(quiz=self.kwargs['pk'])
+        b = Answer.objects.filter(question__id__in=quiz.all())
+        answer = LearnerAnswer.objects.filter(answer__question_id__in=quiz.all(), student=self.request.user.learner)
+        context = super(TakenQuizListView, self).get_context_data(**kwargs)
+        context['answers'] = answer
+        return context
 
-class RatingTable(LoginRequiredMixin, DeleteView):
-    model = TakenQuiz
+
+class Rating(DeleteView):
+    model = Quiz
     context_object_name = 'quiz'
     template_name = 'dashboard/learner/rating.html'
 
-    def get_queryset(self):
-        return self.request.qu
+    def get_context_data(self, **kwargs):
+        quiz = self.get_object()
+        taken_quizzes = quiz.taken_quizzes.select_related('learner__user').order_by('-date')
+        total_taken_quizzes = taken_quizzes.count()
+        quiz_score = quiz.taken_quizzes.aggregate(average_score=Avg('score'))
+        extra_context = {
+            'taken_quizzes': taken_quizzes,
+            'total_taken_quizzes': total_taken_quizzes,
+            'quiz_score': quiz_score
+        }
+
+        kwargs.update(extra_context)
+        return super().get_context_data(**kwargs)
 
 
 def take_quiz(request, pk):
+    quiz = get_object_or_404(Quiz, pk=pk)
+    learner = request.user.learner
 
-        quiz = get_object_or_404(Quiz, pk=pk)
-        learner = request.user.learner
+    if learner.quizzes.filter(pk=pk).exists():
+        LearnerAnswer.objects.filter(student=learner).delete()
+        TakenQuiz.objects.filter(learner=learner, quiz=quiz).delete()
+    if quiz.course in request.user.course_set.all():
 
-        if learner.quizzes.filter(pk=pk).exists():
-            LearnerAnswer.objects.filter(student=learner).delete()
-            TakenQuiz.objects.filter(learner=learner, quiz=quiz).delete()
-        if quiz.course in request.user.course_set.all():
+        total_questions = quiz.questions.count()
+        unanswered_questions = learner.get_unanswered_questions(quiz)
+        total_unanswered_questions = unanswered_questions.count()
+        progress = 100 - round(((total_unanswered_questions - 1) / total_questions) * 100)
+        qnumber = 100 - round(((total_unanswered_questions - 1) / total_questions) * 100)
+        question = unanswered_questions.first()
 
-            total_questions = quiz.questions.count()
-            unanswered_questions = learner.get_unanswered_questions(quiz)
-            total_unanswered_questions = unanswered_questions.count()
-            progress = 100 - round(((total_unanswered_questions - 1) / total_questions) * 100)
-            qnumber = 100 - round(((total_unanswered_questions - 1) / total_questions) * 100)
-            question = unanswered_questions.first()
-
-            if request.method == 'POST':
-                form = TakeQuizForm(question=question, data=request.POST)
-                if form.is_valid():
-                    with transaction.atomic():
-                        learner_answer = form.save(commit=False)
-                        learner_answer.student = learner
-                        learner_answer.save()
-                        if learner.get_unanswered_questions(quiz).exists():
-                            return redirect('take_quiz', pk)
-                        else:
-                            correct_answers = learner.quiz_answers.filter(answer__question__quiz=quiz,
-                                                                          answer__is_correct=True).count()
-                            score = round((correct_answers / total_questions) * 100.0, 2)
-                            TakenQuiz.objects.create(learner=learner, quiz=quiz, score=score)
-                            return redirect('taken_quiz_list')
-            else:
-                form = TakeQuizForm(question=question)
-
-            return render(request, 'dashboard/learner/take_quiz_form.html', {
-                'quiz': quiz,
-                'question': question,
-                'form': form,
-                'progress': progress,
-                'qnumber': round(qnumber / 100 * total_questions),
-                'total_ques': total_questions
-            })
+        if request.method == 'POST':
+            form = TakeQuizForm(question=question, data=request.POST)
+            if form.is_valid():
+                with transaction.atomic():
+                    learner_answer = form.save(commit=False)
+                    learner_answer.student = learner
+                    learner_answer.save()
+                    if learner.get_unanswered_questions(quiz).exists():
+                        return redirect('take_quiz', pk)
+                    else:
+                        correct_answers = learner.quiz_answers.filter(answer__question__quiz=quiz,
+                                                                      answer__is_correct=True).count()
+                        score = round((correct_answers / total_questions) * 100.0, 2)
+                        TakenQuiz.objects.create(learner=learner, quiz=quiz, score=score, correct=correct_answers)
+                        return redirect('taken_quiz_list', quiz.pk)
         else:
-            return render(request, 'dashboard/admin/error.html')
+            form = TakeQuizForm(question=question)
+
+        return render(request, 'dashboard/learner/take_quiz_form.html', {
+            'quiz': quiz,
+            'question': question,
+            'form': form,
+            'progress': progress,
+            'qnumber': round(qnumber / 100 * total_questions),
+            'total_ques': total_questions
+        })
+    else:
+        return render(request, 'dashboard/admin/error.html')
 
 
 def buycourse(request, pk):
@@ -1017,9 +1034,6 @@ def showmycourses(request):
         return render(request, 'dashboard/learner/mycourses.html', context)
     else:
         return render(request, 'dashboard')
-
-
-
 
 
 def paymentComplete(request, pk):
