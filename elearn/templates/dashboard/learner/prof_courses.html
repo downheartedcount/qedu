@@ -37,17 +37,18 @@
 
                       {% if courses %}
         {% for course in courses %}
-                <div class="col-lg-4 col-md-6 portfolio-item first">
+             <div class="col-lg-4 col-md-6 portfolio-item first" style="width: 300px;">
                     <a href="{% url 'course' course.pk %}">
-                                            <div class="portfolio-img rounded overflow-hidden">
-                        <img class="img-fluid" style = "width: 100%; height: 400px" src="{{ course.thumb.url}}" alt="">
-                        <div class="portfolio-btn">
-                            <p class = "text-white col-md-7">{{ course.synopsis }}</p>
-                            <p class = "text-white col-md-1">{% trans 'Цена' %}: {{ course.cprice }}</p>
-                            <p class = "text-white px-5">{% trans 'Автор' %}: {{ course.trainer }}</p>
+                        <div class="portfolio-img rounded overflow-hidden">
+                      <img class="img-fluid" style = "width: 100%; height: 300px" src="{{ course.thumb.url}}" alt="">
+
+                         <div class="portfolio-btn">
+                            <h6 class = "text-white py-5 position-relative">{{ course.synopsis }}</h6>
+=                            <p class = "text-white position-absolute">{% trans 'Цена' %}: {{ course.cprice }}₸</p>
+
 
                         </div>
-                    </div>
+                        </div>
                     </a>
 
                 </div>

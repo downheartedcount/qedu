@@ -221,32 +221,59 @@
         </div>
     </div>
     <!-- About End -->
-
-    <!-- Testimonial Start -->
+ <!-- Testimonial Start -->
     <div class="container-fluid bg-light py-5 my-5" id="testimonial">
         <div class="container-fluid py-5">
-            <h1 class="display-5 text-center mb-5 wow fadeInUp" data-wow-delay="0.1s">Отзывы</h1>
+            <h1 class="display-5 text-center mb-5 wow fadeInUp" data-wow-delay="0.1s">{% trans 'Отзывы' %}</h1>
             <div class="row justify-content-center">
                 <div class="col-lg-3 d-none d-lg-block">
                     <div class="testimonial-left h-100">
                         <img class="img-fluid wow fadeIn" data-wow-delay="0.1s" src={% static 'img/bb.png' %} alt="">
                         <img class="img-fluid wow fadeIn" data-wow-delay="0.3s" src={% static 'img/bb.png' %} alt="">
-                        <img class="img-fluid wow fadeIn" data-wow-delay="0.5s" src={% static 'img/bb.png' %} alt="">
+                        <img class="img-fluid wow fadeIn" data-wow-delay="0.5s" src='{% static 'img/bb.png' %}' alt="">
                     </div>
                 </div>
                 <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.5s">
                     <div class="owl-carousel testimonial-carousel">
                         <div class="testimonial-item text-center">
                             <div class="position-relative mb-5">
-                                <img class="img-fluid rounded-circle border border-secondary p-2 mx-auto" src={% static 'img/bb.png' %} alt="">
+                                <img class="img-fluid rounded-circle border border-secondary p-2 mx-auto" src="https://static.tildacdn.com/tild3237-6162-4236-a461-613433626364/73cbede9-d3b5-44bb-8.jpg" alt="">
                                 <div class="testimonial-icon">
                                     <i class="fa fa-quote-left text-primary"></i>
                                 </div>
                             </div>
-                            <p class="fs-5 fst-italic">Dolores sed duo clita tempor justo dolor et stet lorem kasd labore dolore lorem ipsum. At lorem lorem magna ut et, nonumy et labore et tempor diam tempor erat.</p>
+                            <p class="fs-5 fst-italic">Quantum білім беру орталығы❤️ Бұл орталық тек жай ғана білім беріп емес, сонымен қоса общение,дружба,креативке толыы жас мамандар беретін ең позитивті орталық❤️ Мен былтыр 11 сынып түлегі ретінде Quantum ды таңдағаныма еш өкінбеймін☺️ Керісінше қазір сол жердегі достарымды,ағайларымды жанеде сол жердегі атмосфераны ерекшее сағынамын</p>
                             <hr class="w-25 mx-auto">
-                            <h5>Client Name</h5>
-                            <span>Profession</span>
+                            <h5>Молдағапас Айдана</h5>
+                            <span>{% trans 'Ученик' %}</span>
+                        </div>
+                        <div class="testimonial-item text-center">
+                            <div class="position-relative mb-5">
+                                <img class="img-fluid rounded-circle border border-secondary p-2 mx-auto" src="https://static.tildacdn.com/tild3637-3532-4432-a461-363131303762/d1bea354-7d65-44ef-9.jpg" alt="">
+                                <div class="testimonial-icon">
+                                    <i class="fa fa-quote-left text-primary"></i>
+                                </div>
+                            </div>
+                            <p class="fs-5 fst-italic">В Quantum мне нравится:
+Месторасположение и время проведения курсов (доступность выбора), преподаватели, методика преподавания , атмосфера и уют - главные достоинства центра ! Благодарю всех учителей , которые внесли вклад в мое обучение !</p>
+                            <hr class="w-25 mx-auto">
+                            <h5>Мұхаметқали Айару
+</h5>
+                            <span>{% trans 'Ученик' %}</span>
+                        </div>
+                        <div class="testimonial-item text-center">
+                            <div class="position-relative mb-5">
+                                <img class="img-fluid rounded-circle border border-secondary p-2 mx-auto" src="https://static.tildacdn.com/tild6335-3163-4634-b630-336436346561/2b8059d3-2e7a-4fd2-8.jpg" alt="">
+                                <div class="testimonial-icon">
+                                    <i class="fa fa-quote-left text-primary"></i>
+                                </div>
+                            </div>
+                            <p class="fs-5 fst-italic">Благодаря Квантуму я смог найти новое общение и новых друзей.Поначалу я думал что это просто школа но копась глубже моё мнение поменялось.Квантум принимает любую инициативу с вашей стороны.Я предложил Жандос Ағай добавить В Квантум подкасты и Интервью с выпускниками.Квантум идеальное место приходите мы вас ждем
+</p>
+                            <hr class="w-25 mx-auto">
+                            <h5>©Назар Алпысбай
+ </h5>
+                            <span>Подкастер</span>
                         </div>
                     </div>
                 </div>
@@ -260,64 +287,8 @@
             </div>
         </div>
     </div>
+    <!-- Testimonial End -->
 
-    <!-- Service Start -->
-    <div class="container-fluid bg-light my-5 py-6" id="service">
-        <div class="container">
-            <div class="row g-5 mb-5 wow fadeInUp" data-wow-delay="0.1s">
-                <div class="col-lg-6">
-                    <h1 class="display-5 mb-0">{% trans 'Отзывы' %}</h1>
-                </div>
-
-            </div>
-            <div class="row g-4">
-                <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s">
-                    <div class="service-item d-flex flex-column flex-sm-row bg-white rounded h-100 p-4 p-lg-5">
-
-                        <div class="ms-sm-4">
-                            <h4 class="mb-3">Молдағапас Айдана</h4>
-                            <h6 class="mb-3">   <span class="text-primary">{% trans 'Ученик' %}</span></h6>
-                            <span>В Quantum мне нравится:
-Quantum білім беру орталығы❤️ Бұл орталық тек жай ғана білім беріп емес, сонымен қоса общение,дружба,креативке толыы жас мамандар беретін ең позитивті орталық❤️ Мен былтыр 11 сынып түлегі ретінде Quantum ды таңдағаныма еш өкінбеймін☺️ Керісінше қазір сол жердегі достарымды,ағайларымды жанеде сол жердегі атмосфераны ерекшее сағынамын                            </span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s">
-                                       <div class="service-item d-flex flex-column flex-sm-row bg-white rounded h-100 p-4 p-lg-5">
-
-                        <div class="ms-sm-4">
-                            <h4 class="mb-3">Мұхаметқали Айару</h4>
-                            <h6 class="mb-3">   <span class="text-primary">{% trans 'Ученик' %}</span></h6>
-                            <span>В Quantum мне нравится:
-Месторасположение и время проведения курсов (доступность выбора), преподаватели, методика преподавания , атмосфера и уют - главные достоинства центра ! Благодарю всех учителей , которые внесли вклад в мое обучение !</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s">
-                                       <div class="service-item d-flex flex-column flex-sm-row bg-white rounded h-100 p-4 p-lg-5">
-
-                        <div class="ms-sm-4">
-                            <h4 class="mb-3">Назар Алпысбай</h4>
-                            <h6 class="mb-3">   <span class="text-primary">Подкастер</span></h6>
-                            <span>В Quantum мне нравится:
-Благодаря Квантуму я смог найти новое общение и новых друзей.Поначалу я думал что это просто школа но копась глубже моё мнение поменялось.Квантум принимает любую инициативу с вашей стороны.Я предложил Жандос Ағай добавить В Квантум подкасты и Интервью с выпускниками.Квантум идеальное место приходите мы вас ждем                            </span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.3s">
-                                      <div class="service-item d-flex flex-column flex-sm-row bg-white rounded h-100 p-4 p-lg-5">
-
-                        <div class="ms-sm-4">
-                            <h4 class="mb-3">Айым Ескендір</h4>
-                            <h6 class="mb-3">   <span class="text-primary">{% trans 'Ученик' %}</span></h6>
-                            <span>В Quantum мне нравится:
-Quantum это место где скрытые таланты раскрываются.А учителя всегда поддержат тебя,всегда готовы послушать и дать совет.И Quantum это не только образовательный центр,но и там есть разные развивающие курсы и развлекательные программы.Вообщем Quantum это сила!!                            </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
     <!-- Service End -->
 
 
@@ -370,17 +341,18 @@ Quantum это место где скрытые таланты раскрыва�
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="{% static 'lib/wow/wow.min.js' %}"></script>
-    <script src="{% static 'lib/easing/easing.min.js' %}"></script>
-    <script src="{% static 'lib/waypoints/waypoints.min.js' %}"></script>
-    <script src="{% static 'lib/typed/typed.min.js' %}"></script>
-    <script src="{% static 'lib/counterup/counterup.min.js' %}"></script>
-    <script src="{% static 'lib/owlcarousel/owl.carousel.min.js' %}"></script>
-    <script src="{% static 'lib/isotope/isotope.pkgd.min.js' %}s"></script>
-    <script src="{% static 'lib/lightbox/js/lightbox.min.js' %}s"></script>
+    <script src={% static 'lib/wow/wow.min.js'%}></script>
+    <script src={% static "lib/easing/easing.min.js" %}></script>
+    <script src={% static "lib/waypoints/waypoints.min.js"%}></script>
+    <script src={% static "lib/typed/typed.min.js"%}></script>
+    <script src={% static "lib/counterup/counterup.min.js"%}></script>
+    <script src={%  static "lib/owlcarousel/owl.carousel.min.js"%}></script>
+    <script src={% static "lib/isotope/isotope.pkgd.min.js"%}></script>
+    <script src={% static "lib/lightbox/js/lightbox.min.js"%}></script>
 
     <!-- Template Javascript -->
-    <script src="{% static 'mein.js/main.js' %}"></script>
+    <script src={% static "mein.js/main.js"%}></script>
+</body>
 </body>
 
 </html>
