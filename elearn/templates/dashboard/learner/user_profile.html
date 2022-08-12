@@ -7,16 +7,19 @@
 
 {% block body %}
 
-<div class="container-fluid bg-white">
-<div class="row">
-<div class="col-sm-3" style="color: red">
-  <p style="color: blue"></p>
-</div>
+<div class="container">
+    <div class="main-body">
+{% if users %}
+{% for user in users %}
 
-    <div class="row">
-        <div class="col-md-3 border-right">
-            <div class="d-flex flex-column align-items-center text-center p-3 py-5">
-            {% if users %}
+
+          <div class="row gutters-sm">
+            <div class="col-md-4 mb-3">
+              <div class="card">
+                <div class="card-body">
+                  <div class="d-flex flex-column align-items-center text-center">
+
+                {% if users %}
                 {% for user in users %}
                             {% if user.avatar %}
                <img src="{{ user.avatar.url }}" alt="{{ user.username }}" class = 'img-thumbnail'>
@@ -26,63 +29,121 @@
                <img src="{% static 'img/bb.png' %}" alt="{{ user.username }}" class = 'img-thumbnail'>
 
             {% endif %}
+                  {% endfor %}
+                      <div class="mt-3">
+                      <h4>{{ user.username }}</h4>
+                      <p class="text-secondary mb-1">Ученик</p>
+                      <p class="text-muted font-size-sm">{{ user.city }}</p>
+                      <a href="{% url 'mycourses' %}"><button class="btn btn-primary">Мои курсы</button></a>
+                          {% if user.profile %}
+                      <a href="{% url 'acreate_profile' %}"><button class="btn btn-outline-primary">Изменить профиль</button></a>
+                      {% else %}
+                              <a href="{% url 'profile' %}"><button class="btn btn-outline-primary">Изменить профиль</button></a>
 
-                <span class="text-black-50">
-                    {% if user.profile %}
-                        <a href={% url 'acreate_profile' %}>{% trans 'Изменить' %}</a>
-                        {% else %}
-                        <a href = {% url 'profile' %}>{% trans 'Изменить' %}</a>
-                    {% endif %}
-            </span><span> </span></div>
+                      {% endif %}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="card mt-3">
+                <ul class="list-group list-group-flush">
+    {% for user in users %}
+
+                  <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                      <h6 class="mb-0"><i class="fab fa-tiktok"></i><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tiktok mr-2 icon-inline text-info"></svg>TikTok</h6>
+                    <span class="text-secondary">{{ user.TikTok }}</span>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                      <h6 class="mb-0"><i class="fab fa-instagram"></i><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tiktok mr-2 icon-inline text-info"></svg>Instagram</h6>
+                    <span class="text-secondary">{{ user.instagram }}</span>
+                  </li>
+                </ul>
+              </div>
             </div>
-        <div class="col-md-5 border-right">
-            <div class="p-3 py-5">
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h4 class="text-right">{% trans 'Мой профиль' %}</h4>
-                </div>
-                <div class="row mt-2">
-                    <div class="col-md-6"><label class="labels">Username</label><label type="text" class="form-control" placeholder="first name" value="">{{ user.username }}</label></div>
-                </div>
-                <div class="row mt-3">
-                    <div class="col-md-12"><label class="labels">Email</label><label type="text" class="form-control" placeholder="enter email id" value="">{{ user.email }}</label></div>
-                </div>
-                <div class="row mt-3">
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="p-3 py-5">
-                <div class="d-flex justify-content-between align-items-center experience"><span></span><span class="border px-3 p-1 add-experience"><i class="fa fa-plus"></i>{% trans 'Мои курсы' %}</span></div><br>
-                {% for cours in courses %}
-                    {{ cours.synopsis }}
-                {% endfor %}
 
 
+            <div class="col-md-8">
+              <div class="card mb-3">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Полное имя</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                        {{ user.first_name }} {{ user.last_name }}
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                        {% endfor %}
+                      <h6 class="mb-0">Почта</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                        {{ user.email }}
+                    </div>
+                  </div>
+    {% for user in users %}
 
-            </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Номер телефона</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                        {{user.phonenumber}}
+                    </div>
+                  </div>
+                    <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Учебное заведение</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                      {{ user.state }}
+                    </div>
+                  </div>
+                  <hr>
+                </div>
+              </div>
+
+
+             <div class="row gutters-sm">
+
+                <div class="col-sm-6 mb-3">
+                  <div class="card h-100">
+                    <div class="card-body">
+                      <h6 class="d-flex align-items-center mb-3"><i class="material-icons text-info mr-2">Мои курсы</i></h6>
+                        {% for cours in courses %}
+                            <a href="{% url 'course' cours.pk %}"><small>{{ cours.name }}</small></a>
+                      <div class="progress mb-3" style="height: 5px">
+                        <div class="progress-bar bg-primary" role="progressbar" style="width: 100%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+                      </div>
+                        {% endfor %}
+
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+{% endfor %}
+    {% else %}
+    <a href="{% url 'profile' %}"><button class="btn btn-outline-primary">Вам нужно добавить фото профиля</button></a>
+
+{% endif %}
+
 
         </div>
     </div>
-</div>
-</div>
-
-
-
-
-
-<div class="col-sm-3" style="color: red">
-</div>
-
-</div>
-</div>
-
     <script type="text/javascript" src="{% static 'js/jquery-2.1.3.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/jquery.dataTables.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/main.js' %}"></script>
-</body>
+</div>
 
-</html>
+</div>
 {% endblock %}
 
 

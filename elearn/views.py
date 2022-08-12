@@ -36,7 +36,7 @@ from django.http import HttpResponse, Http404, JsonResponse, HttpResponseBadRequ
 from toml.encoder import unicode
 
 from .forms import TakeQuizForm, LearnerSignUpForm, InstructorSignUpForm, QuestionForm, BaseAnswerInlineFormSet, \
-    UserForm, ProfileForm, PostForm, CourseForm, UpdateProfileForm
+    UserForm, ProfileForm, CourseForm, UpdateProfileForm
 from django.http import HttpResponseRedirect, HttpResponse
 from django.template import loader
 from django.urls import reverse
@@ -53,8 +53,8 @@ import operator
 import itertools
 from django.db.models import Avg, Count, Sum, Q
 from django.forms import inlineformset_factory
-from .models import TakenQuiz, Profile, Quiz, Question, Answer, Learner, User, Course, Tutorial, Notes, Announcement, \
-    Module, LearnerAnswer, Category, Module, Access
+from .models import TakenQuiz, Profile, Quiz, Question, Answer, Learner, User, Course, Tutorial, \
+    Module, LearnerAnswer, Category, Module, Access, RatingModel
 from django.db import transaction
 from django.contrib.auth.hashers import make_password
 from django.core.files.storage import FileSystemStorage
@@ -179,7 +179,7 @@ def post_course(request):
                        category_id=category_id)
             a.save()
             messages.success(request, 'Курс создан успешно')
-            return redirect('course')
+            return redirect('course_detail', a.pk)
         else:
             return render(request, 'dashboard/admin/course.html')
 
@@ -221,11 +221,9 @@ def update_course(request, pk):
     user = User.objects.get(id=request.user.pk)
     if user.is_admin:
         course = Course.objects.get(id=pk)
-        categorys = Category.objects.all()
         template = loader.get_template('dashboard/admin/update_object.html')
         context = {
             'course': course,
-            'categorys': categorys
         }
         return HttpResponse(template.render(context, request))
     else:
@@ -257,10 +255,6 @@ def updaterecord(request, pk):
             cprice = request.POST['cprice']
         else:
             cprice = 500
-        if 'category_id' in request.POST:
-            category_id = request.POST['category_id']
-        else:
-            category_id = None
         if 'synopsis' in request.POST:
             synopsis = request.POST['synopsis']
         else:
@@ -276,9 +270,8 @@ def updaterecord(request, pk):
         course.synopsis = synopsis
         course.trainer = trainer
 
-        course.category_id = category_id
         course.save()
-        return render(request, 'dashboard/admin/home.html')
+        return redirect('course_detail', course.pk)
     else:
         return render(request, 'dashboard/admin/error.html')
 
@@ -354,7 +347,7 @@ def coursed(request, pk):
             a.course_set.remove(course)
             return redirect('aluser')
         else:
-            messages.error(request, 'По неизвестной причине, курс не добавлен')
+            messages.error(request, 'По неизвестной причине, курс не удален')
             return redirect('aluser')
     else:
         return render(request, 'dashboard/admin/error.html')
@@ -434,15 +427,21 @@ def acreate_profile(request):
     return render(request, 'dashboard/learner/create_profile.html', {'profile_form': profile_form})
 
 
+
+
+
 def auser_profile(request):
     current_user = request.user
     user_id = current_user.id
     users = Profile.objects.filter(user_id=user_id)
-    users = {'users': users}
+    courses = request.user.course_set.get_queryset()
+    users = {'users': users, 'courses': courses,}
     return render(request, 'dashboard/learner/user_profile.html', users)
 
 
-# Instructor Views
+
+
+# Quiz Views
 
 
 class QuizCreateView(AdminUserMixin, CreateView):
@@ -782,7 +781,7 @@ def updatetutor(request, pk):
         tutorial.video = video
         tutorial.author_id = author_id
         tutorial.save()
-        return redirect('list_course')
+        return redirect('itutorial-detail', tutorial.pk)
     else:
         return render(request, 'dashboard/admin/error.html')
 
@@ -811,7 +810,7 @@ def addfile(request, pk):
         tutorial = Tutorial.objects.get(id=pk)
         tutorial.task = task
         tutorial.save()
-        return redirect('list_course')
+        return redirect('itutorial-detail', tutorial.pk)
     else:
         return render(request, 'dashboard/admin/error.html')
 
@@ -883,17 +882,6 @@ class scourse(generic.DetailView):
         return context
 
 
-def luser_profile(request):
-    current_user = request.user
-    user_id = current_user.id
-    print(user_id)
-    user = request.user
-    taken_quiz = TakenQuiz.objects.get(learner=user)
-    cours = Course.objects.get(students__learner=user)
-    users = {'users': user, 'taken_quizzes': taken_quiz, 'courses': cours, }
-    return render(request, 'dashboard/learner/user_profile.html', users)
-
-
 def lcreate_profile(request):
     if request.method == 'POST':
         first_name = request.POST['first_name']
@@ -956,20 +944,12 @@ class Rating(DeleteView):
     model = Quiz
     context_object_name = 'quiz'
     template_name = 'dashboard/learner/rating.html'
-
     def get_context_data(self, **kwargs):
         quiz = self.get_object()
-        taken_quizzes = quiz.taken_quizzes.select_related('learner__user').order_by('-date')
-        total_taken_quizzes = taken_quizzes.count()
-        quiz_score = quiz.taken_quizzes.aggregate(average_score=Avg('score'))
-        extra_context = {
-            'taken_quizzes': taken_quizzes,
-            'total_taken_quizzes': total_taken_quizzes,
-            'quiz_score': quiz_score
-        }
-
-        kwargs.update(extra_context)
-        return super().get_context_data(**kwargs)
+        taken_quizzes = RatingModel.objects.filter(quiz=quiz).order_by('-score')
+        context = super(Rating, self).get_context_data(**kwargs)
+        context['taken_quizzes'] = taken_quizzes
+        return context
 
 
 def take_quiz(request, pk):
@@ -987,7 +967,6 @@ def take_quiz(request, pk):
         progress = 100 - round(((total_unanswered_questions - 1) / total_questions) * 100)
         qnumber = 100 - round(((total_unanswered_questions - 1) / total_questions) * 100)
         question = unanswered_questions.first()
-
         if request.method == 'POST':
             form = TakeQuizForm(question=question, data=request.POST)
             if form.is_valid():
@@ -1002,6 +981,11 @@ def take_quiz(request, pk):
                                                                       answer__is_correct=True).count()
                         score = round((correct_answers / total_questions) * 100.0, 2)
                         TakenQuiz.objects.create(learner=learner, quiz=quiz, score=score, correct=correct_answers)
+                        if learner.quizzes.filter(pk=pk).exists():
+                            pass
+                        else:
+                             RatingModel.objects.create(learner=learner, quiz=quiz, score=score, correct=correct_answers)
+
                         return redirect('taken_quiz_list', quiz.pk)
         else:
             form = TakeQuizForm(question=question)

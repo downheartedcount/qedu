@@ -5,7 +5,6 @@ import json
 
 from django.test import SimpleTestCase, TestCase
 
-
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.db import transaction
@@ -14,7 +13,7 @@ from django import forms
 from django.shortcuts import render
 
 from elearn.models import (Answer, Question, Learner, LearnerAnswer,
-                           Course, User, Announcement, Profile)
+                           Course, User, Profile)
 
 import hashlib
 import json
@@ -23,15 +22,9 @@ from base64 import b64encode
 from django import forms
 
 
-
-class PostForm(forms.ModelForm):
-    class Meta:
-        model = Announcement
-        fields = ('content', )
-
 class ProfileForm(forms.ModelForm):
-    email=forms.EmailField(widget=forms.EmailInput())
-    confirm_email=forms.EmailField(widget=forms.EmailInput())
+    email = forms.EmailField(widget=forms.EmailInput())
+    confirm_email = forms.EmailField(widget=forms.EmailInput())
 
     class Meta:
         model = User
@@ -40,7 +33,6 @@ class ProfileForm(forms.ModelForm):
             'first_name',
             'last_name',
             'email',
-
         ]
 
 
@@ -48,7 +40,6 @@ class CourseForm(forms.ModelForm):
     class Meta:
         model = Course
         fields = ('name', 'cprice', 'synopsis')
-
 
 
 class UserForm(forms.ModelForm):
@@ -65,16 +56,15 @@ class UserForm(forms.ModelForm):
         fields = ('username', 'first_name', 'last_name', 'email')
 
 
-
 class InstructorSignUpForm(UserCreationForm):
     class Meta(UserCreationForm.Meta):
         model = User
 
     def __init__(self, *args, **kwargs):
-            super(InstructorSignUpForm, self).__init__(*args, **kwargs)
+        super(InstructorSignUpForm, self).__init__(*args, **kwargs)
 
-            for fieldname in ['username', 'password1', 'password2']:
-                self.fields[fieldname].help_text = None
+        for fieldname in ['username', 'password1', 'password2']:
+            self.fields[fieldname].help_text = None
 
     def save(self, commit=True):
         user = super().save(commit=False)
@@ -84,7 +74,6 @@ class InstructorSignUpForm(UserCreationForm):
         return user
 
 
-
 class LearnerSignUpForm(UserCreationForm):
     email = forms.EmailField(max_length=254, help_text='Required. Inform a valid email address.', required=True)
 
@@ -92,15 +81,17 @@ class LearnerSignUpForm(UserCreationForm):
         model = User
 
     def __init__(self, *args, **kwargs):
-            super(LearnerSignUpForm, self).__init__(*args, **kwargs)
+        super(LearnerSignUpForm, self).__init__(*args, **kwargs)
 
-            for fieldname in ['username','email', 'password1', 'password2',]:
-                self.fields[fieldname].help_text = None
+        for fieldname in ['username', 'email', 'password1', 'password2', ]:
+            self.fields[fieldname].help_text = None
+
     def clean(self):
         email = self.cleaned_data.get('email')
         if User.objects.filter(email=email).exists():
             raise ValidationError("Email exists")
         return self.cleaned_data
+
     @transaction.atomic
     def save(self):
         user = super().save(commit=False)
@@ -111,15 +102,10 @@ class LearnerSignUpForm(UserCreationForm):
         return user
 
 
-
-
-
-
 class QuestionForm(forms.ModelForm):
     class Meta:
         model = Question
-        fields = ('text', )
-
+        fields = ('text',)
 
 
 class BaseAnswerInlineFormSet(forms.BaseInlineFormSet):
@@ -145,7 +131,7 @@ class TakeQuizForm(forms.ModelForm):
 
     class Meta:
         model = LearnerAnswer
-        fields = ('answer', )
+        fields = ('answer',)
 
     def __init__(self, *args, **kwargs):
         question = kwargs.pop('question')
@@ -158,4 +144,4 @@ class UpdateProfileForm(forms.ModelForm):
 
     class Meta:
         model = Profile
-        fields = ['avatar']
+        fields = ['avatar', 'phonenumber', 'state', 'city', 'first_name', 'last_name', 'TikTok', 'instagram']

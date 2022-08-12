@@ -4,7 +4,7 @@
 {% load static %}
 {% block body %}
 
-    {% if tutorial.module.course in user.course_set.all %}
+    {% if tutorial.module.course in user.course_set.all or tutorial.module.course.category.slug == '3' %}
         <section id="courses" class="">
    <div class="container">
       <div class="row">

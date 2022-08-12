@@ -19,29 +19,8 @@
                   {% csrf_token %}
           <div class="card-body">
             <div class="row align-items-center pt-4 pb-3">
-              <div class="col-md-3 ps-5">
-
-                <h6 class="mb-0">Категория курса</h6>
-
-              </div>
-              <div class="col-md-9 pe-5">
-
-                                <div class="form-label-group ow align-items-center pt-4 pb-3">
-                    <select class="w3-select w3-border" name="category_id">
-                  }
-
-  <option value="">Выберите категорию</option>
-
-  {% if categorys %}
-  {% for category in categorys %}
-<option value="{{ category.id }}">{{ category.name }}</option>
-  {% endfor %}
-  {% endif %}
-</select>
-                                </div>
 
 
-              </div>
             </div>
 
             <div class="row align-items-center pt-4 pb-3">

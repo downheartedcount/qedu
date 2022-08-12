@@ -14,12 +14,8 @@
          </div>
          <div class="col-md-3">
             <div class="card mb-3">
-               <!--here include the photo that stored in media/photos dir-->
-               <!--here photo is the field name-->
-               <!-- course.trainer.photo.url is used to get the image of each trainer-->
-               <!--trainer is a foregin key field and photo is field in trainers models and later url-->
                {% if course.thumb %}
-               <img src="{{ course.thumb.url }}" alt="{{ course.name }}">
+               <img class = "img-responsive" src="{{ course.thumb.url }}" alt="{{ course.name }}">
                {% else %}
                <p>No image</p>
                {% endif %}

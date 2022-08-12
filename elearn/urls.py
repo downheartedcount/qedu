@@ -77,7 +77,6 @@ urlpatterns = [
 
     # Learner URl's
     path('learner/', views.ShopView.as_view(), name='learner'),
-    path('luser_profile/', views.luser_profile, name='luser_profile'),
     path('lcreate_profile/', views.lcreate_profile, name='lcreate_profile'),
     path('taken/<int:pk>', views.TakenQuizListView.as_view(), name='taken_quiz_list'),
     path('quiz/<int:pk>/', views.take_quiz, name='take_quiz'),
@@ -87,4 +86,5 @@ urlpatterns = [
     path('mycourses/', views.showmycourses, name='mycourses'),
     path('lessons/<int:pk>', views.Lesson.as_view(), name='lessons'),
     path('complete/<int:pk>', views.paymentComplete, name="complete"),
+
 ]

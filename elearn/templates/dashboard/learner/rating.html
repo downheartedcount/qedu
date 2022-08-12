@@ -13,6 +13,7 @@
   <h2 class="mb-3"> {% trans 'Результаты' %}</h2>
 
   <div class="sidebar">
+          <a href={% url 'course' object.course.pk %}><button class = bg-white>Вернуться к курсу</button></a>
 
     <table class="table">
       <thead>
@@ -25,9 +26,10 @@
       <tbody>
         {% for taken_quiz in taken_quizzes %}
           <tr>
-            <td>{{ taken_quiz.learner.user.username }}</td>
-            <td>{{ taken_quiz.date|naturaltime }}</td>
+           <td>{{ taken_quiz.learner.user.username }}</td>
+            <td>{{ taken_quiz.date|naturaltime  }}</td>
             <td>{{ taken_quiz.score }}</td>
+
           </tr>
         {% endfor %}
       </tbody>

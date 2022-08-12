@@ -13,7 +13,6 @@ from decimal import Decimal
 from django.test import TestCase
 
 
-
 class User(AbstractUser):
     email = models.EmailField(max_length=254)
     is_learner = models.BooleanField(default=False)
@@ -21,13 +20,6 @@ class User(AbstractUser):
     is_admin = models.BooleanField(default=False)
 
 
-class Announcement(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    content = models.TextField()
-    posted_at = models.DateTimeField(auto_now=True, null=True)
-
-    def __str__(self):
-        return str(self.content)
 
 
 class Profile(models.Model):
@@ -37,16 +29,13 @@ class Profile(models.Model):
     last_name = models.CharField(max_length=255, default='')
     email = models.EmailField(default='none@email.com')
     phonenumber = models.CharField(max_length=255, blank=True, null=True)
-    birth_date = models.DateField(default='1975-12-12')
-    bio = models.TextField(default='')
     city = models.CharField(max_length=255, default='')
     state = models.CharField(max_length=255, default='')
-    country = models.CharField(max_length=255, default='')
-    favorite_animal = models.CharField(max_length=255, default='')
-    hobby = models.CharField(max_length=255, default='')
-
+    instagram = models.CharField(null=True, max_length=255)
+    TikTok = models.CharField(null=True, max_length=255)
     def __str__(self):
         return self.user.username
+
 
 class Category(models.Model):
     name = models.CharField(max_length=50)
@@ -54,6 +43,7 @@ class Category(models.Model):
 
     def __str__(self):
         return self.name
+
 
 class Course(models.Model):
     name = models.CharField(max_length=30)
@@ -80,7 +70,7 @@ class Module(models.Model):
 class Tutorial(models.Model):
     title = models.CharField(max_length=50)
     content = models.TextField()
-    module = models.ForeignKey(Module, on_delete=models.CASCADE, default='',)
+    module = models.ForeignKey(Module, on_delete=models.CASCADE, default='', )
     created_at = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     video = EmbedVideoField(blank=True, null=True)
@@ -90,28 +80,12 @@ class Tutorial(models.Model):
         return self.title
 
 
-class Notes(models.Model):
-    title = models.CharField(max_length=500)
-    file = models.FileField(upload_to='', null=True, blank=True)
-    cover = models.ImageField(upload_to='', null=True, blank=True)
-    course = models.ForeignKey(Course, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return self.title
-
-    def delete(self, *args, **kwargs):
-        self.file.delete()
-        self.cover.delete()
-        super().delete(*args, **kwargs)
-
-
 class Quiz(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='quizzes')
     name = models.CharField(max_length=255)
     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='quizzes')
     tutorial = models.ForeignKey(Tutorial, on_delete=models.CASCADE, related_name='quizzes', default='', null=False)
-    reattempt=models.BooleanField(default=True, verbose_name='Allow Reattempt')
+    reattempt = models.BooleanField(default=True, verbose_name='Allow Reattempt')
 
     def __str__(self):
         return self.name
@@ -149,9 +123,10 @@ class Learner(models.Model):
     def __str__(self):
         return self.user.username
 
+
 class Access(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, null = True)
-    course = models.ForeignKey(Course, on_delete=models.CASCADE, null = True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, null=True)
     date = models.DateTimeField(null=True, auto_now_add=True)
 
     def __str__(self):
@@ -171,9 +146,15 @@ class TakenQuiz(models.Model):
     date = models.DateTimeField(auto_now_add=True)
 
 
+class RatingModel(models.Model):
+    learner = models.ForeignKey(Learner, on_delete=models.CASCADE, related_name='rating')
+    quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE, related_name='rating')
+    score = models.FloatField()
+    correct = models.IntegerField()
+    date = models.DateTimeField(auto_now_add=True)
+
+
 class LearnerAnswer(models.Model):
     student = models.ForeignKey(Learner, on_delete=models.CASCADE, related_name='quiz_answers')
     answer = models.ForeignKey(Answer, on_delete=models.CASCADE, related_name='+')
 
-
-# SHOP
