@@ -13,7 +13,7 @@ from django import forms
 from django.shortcuts import render
 
 from elearn.models import (Answer, Question, Learner, LearnerAnswer,
-                           Course, User, Profile)
+                           Course, User, Profile, Tutorial)
 
 import hashlib
 import json
@@ -145,3 +145,11 @@ class UpdateProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ['avatar', 'phonenumber', 'state', 'city', 'first_name', 'last_name', 'TikTok', 'instagram']
+
+
+class QuillPostForm(forms.ModelForm):
+    class Meta:
+        model = Tutorial
+        fields = (
+            'content',
+        )

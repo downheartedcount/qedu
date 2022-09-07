@@ -25,7 +25,7 @@
 <nav class="navbar navbar-expand-lg navbar-light border-bottom p-3 bg-white ">
   <div class="container-fluid">
        <a class="navbar-brand d-flex-inline" href="{% url 'dashboard' %}">
-              <img src="{% static 'img/quant.png' %}"  class = "logo"alt="">
+              <img src="{% static 'img/quantum.png' %}"  class = "logo"alt="">
           </a>
     <a class="navbar-brand" href="#"></a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -119,5 +119,16 @@
         $(".alert-error").slideUp(500);
     });
 </script>
+     <script src="https://cdn.tiny.cloud/1/3kifk4uors7bl3laxgw6exh8uriyr6l13l4co1yegxquf64i/tinymce/5/tinymce.min.js"
+            referrerpolicy="origin"></script>
+ <script>
+    tinymce.init({
+      selector: 'textarea',
+      plugins: 'advlist autolink lists link image charmap preview anchor pagebreak',
+      toolbar_mode: 'floating',
+    });
+  </script>
+
+
 
 {% block javascript %}{% endblock %}

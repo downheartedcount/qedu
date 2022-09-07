@@ -2,6 +2,7 @@
 <project version="4">
   <component name="Encoding" native2AsciiForPropertiesFiles="true" defaultCharsetForPropertiesFiles="UTF-8">
     <file url="file://$PROJECT_DIR$/Procfile" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/elearn/templates/dashboard/admin/user_profile.html" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/elearn/templates/dashboard/instructor/base.html" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/elearn/templates/dashboard/instructor/correct_answer.html" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/elearn/templates/dashboard/instructor/question.html" charset="UTF-8" />
@@ -14,7 +15,6 @@
     <file url="file://$PROJECT_DIR$/elearn/templates/password_reset_confirm.html" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/elearn/templates/password_reset_done.html" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/elearn/templates/password_reset_email.html" charset="US-ASCII" />
-    <file url="file://$PROJECT_DIR$/elearn/templatetags" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/elearn/templatetags" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/runtime.txt" charset="US-ASCII" />
     <file url="file://$PROJECT_DIR$/voud_quiz" charset="UTF-8" />

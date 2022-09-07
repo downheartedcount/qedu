@@ -15,3 +15,6 @@ admin.site.register(Tutorial)
 admin.site.register(User)
 admin.site.register(Module)
 admin.site.register(Profile)
+admin.site.register(Quiz)
+admin.site.register(Question)
+

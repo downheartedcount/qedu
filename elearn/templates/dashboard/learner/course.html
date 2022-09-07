@@ -15,7 +15,9 @@
          <div class="col-md-3">
             <div class="card mb-3">
                {% if course.thumb %}
-               <img class = "img-responsive" src="{{ course.thumb.url }}" alt="{{ course.name }}">
+<div class="portfolio-img rounded overflow-hidden">
+                      <img class="img-fluid" style = "width: 100%; height: 250px" src="{{ course.thumb.url}}" alt="">
+</div>
                {% else %}
                <p>No image</p>
                {% endif %}
@@ -26,7 +28,7 @@
                   <h6 class="text-secondary">{% trans 'Модули' %}: {{ course.module_set.count }}</h6>
                        {% if course not in user.course_set.all and course.category.slug != '3' %}
                   <div class="mb-3">
-                            <a href="{% url 'buy' course.pk %}" class="btn btn-outline-info">{% trans 'Купить' %}</a>
+                            <a href="{% url 'buy' course.pk %}" class="btn btn-outline-info">{{course.cprice}}₸</a>
                             </div>
                            {% elif not user.is_learner %}
                            <a href="{% url 'lsign' %}" class="btn btn-outline-info">{% trans 'Купить' %}</a>

@@ -36,7 +36,7 @@ from django.http import HttpResponse, Http404, JsonResponse, HttpResponseBadRequ
 from toml.encoder import unicode
 
 from .forms import TakeQuizForm, LearnerSignUpForm, InstructorSignUpForm, QuestionForm, BaseAnswerInlineFormSet, \
-    UserForm, ProfileForm, CourseForm, UpdateProfileForm
+    UserForm, ProfileForm, CourseForm, UpdateProfileForm, QuillPostForm
 from django.http import HttpResponseRedirect, HttpResponse
 from django.template import loader
 from django.urls import reverse
@@ -427,18 +427,18 @@ def acreate_profile(request):
     return render(request, 'dashboard/learner/create_profile.html', {'profile_form': profile_form})
 
 
-
-
-
 def auser_profile(request):
     current_user = request.user
     user_id = current_user.id
     users = Profile.objects.filter(user_id=user_id)
     courses = request.user.course_set.get_queryset()
-    users = {'users': users, 'courses': courses,}
+    users = {'users': users, 'courses': courses, }
     return render(request, 'dashboard/learner/user_profile.html', users)
 
 
+class user_detail(generic.DetailView):
+    model = Profile
+    template_name = 'dashboard/admin/user_profile.html'
 
 
 # Quiz Views
@@ -709,6 +709,14 @@ def publish_tutorial(request):
                 video = request.POST['video']
             else:
                 video = None
+            if 'video2' in request.POST:
+                video2 = request.POST['video2']
+            else:
+                video2 = None
+            if 'video3' in request.POST:
+                video3 = request.POST['video3']
+            else:
+                video3 = None
             if 'task' in request.FILES:
                 task = request.FILES['task']
             else:
@@ -726,6 +734,8 @@ def publish_tutorial(request):
     else:
         return render(request, 'dashboard/admin/error.html')
 
+def model_form_view(request):
+    return render(request, 'dashboard/admin/form_view.html', {'form': QuillPostForm()})
 
 class ITutorialDetail(AdminUserMixin, LoginRequiredMixin, DetailView):
     model = Tutorial
@@ -771,6 +781,14 @@ def updatetutor(request, pk):
             video = request.POST['video']
         else:
             video = None
+        if 'video2' in request.POST:
+            video2 = request.POST['video2']
+        else:
+            video2 = None
+        if 'video3' in request.POST:
+            video3 = request.POST['video3']
+        else:
+            video3 = None
         current_user = request.user
         author_id = current_user.id
 
@@ -780,6 +798,8 @@ def updatetutor(request, pk):
         tutorial.thumb = thumb
         tutorial.video = video
         tutorial.author_id = author_id
+        tutorial.video2 = video2
+        tutorial.video3 = video3
         tutorial.save()
         return redirect('itutorial-detail', tutorial.pk)
     else:
@@ -916,7 +936,9 @@ class Lesson(LoginRequiredMixin, DetailView):
     def get_context_data(self, **kwargs):
         quiz = Quiz.objects.filter(tutorial=self.kwargs['pk'])
         context = super(Lesson, self).get_context_data(**kwargs)
+        tutor = Tutorial.objects.filter(module__name=self.object.module.name)
         context['quizzes'] = quiz
+        context['tutors'] = tutor
         return context
 
 
@@ -933,7 +955,6 @@ class TakenQuizListView(LearnerMixin, ListView):
 
     def get_context_data(self, **kwargs):
         quiz = Question.objects.filter(quiz=self.kwargs['pk'])
-        b = Answer.objects.filter(question__id__in=quiz.all())
         answer = LearnerAnswer.objects.filter(answer__question_id__in=quiz.all(), student=self.request.user.learner)
         context = super(TakenQuizListView, self).get_context_data(**kwargs)
         context['answers'] = answer
@@ -944,12 +965,16 @@ class Rating(DeleteView):
     model = Quiz
     context_object_name = 'quiz'
     template_name = 'dashboard/learner/rating.html'
+
     def get_context_data(self, **kwargs):
         quiz = self.get_object()
-        taken_quizzes = RatingModel.objects.filter(quiz=quiz).order_by('-score')
-        context = super(Rating, self).get_context_data(**kwargs)
-        context['taken_quizzes'] = taken_quizzes
-        return context
+        taken_quizzes = quiz.rating.order_by('-score')
+        extra_context = {
+            'taken_quizzes': taken_quizzes,
+        }
+        kwargs.update(extra_context)
+        return super().get_context_data(**kwargs)
+
 
 
 def take_quiz(request, pk):
@@ -959,8 +984,8 @@ def take_quiz(request, pk):
     if learner.quizzes.filter(pk=pk).exists():
         LearnerAnswer.objects.filter(student=learner).delete()
         TakenQuiz.objects.filter(learner=learner, quiz=quiz).delete()
-    if quiz.course in request.user.course_set.all():
 
+    if quiz.course in request.user.course_set.all() or quiz.course.category.slug=='3':
         total_questions = quiz.questions.count()
         unanswered_questions = learner.get_unanswered_questions(quiz)
         total_unanswered_questions = unanswered_questions.count()
@@ -981,10 +1006,7 @@ def take_quiz(request, pk):
                                                                       answer__is_correct=True).count()
                         score = round((correct_answers / total_questions) * 100.0, 2)
                         TakenQuiz.objects.create(learner=learner, quiz=quiz, score=score, correct=correct_answers)
-                        if learner.quizzes.filter(pk=pk).exists():
-                            pass
-                        else:
-                             RatingModel.objects.create(learner=learner, quiz=quiz, score=score, correct=correct_answers)
+                        RatingModel.objects.create(learner=learner, quiz=quiz, score=score, correct=correct_answers)
 
                         return redirect('taken_quiz_list', quiz.pk)
         else:
@@ -1053,3 +1075,5 @@ def password_reset_request(request):
     password_reset_form = PasswordResetForm()
     return render(request=request, template_name="password_reset.html",
                   context={"password_reset_form": password_reset_form})
+
+

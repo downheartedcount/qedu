@@ -1,46 +1,51 @@
-{% extends 'dashboard/learner/base.html' %}
-{% load i18n %}
+        {% extends 'dashboard/learner/base.html' %}
+        {% load i18n %}
 
-{% load static %}
-{% load crispy_forms_tags humanize %}
-
-
-
-{% block body %}
+        {% load static %}
+        {% load crispy_forms_tags humanize %}
 
 
-<div class="container">
-  <h2 class="mb-3"> {% trans 'Результаты' %}</h2>
 
-  <div class="sidebar">
-          <a href={% url 'course' object.course.pk %}><button class = bg-white>Вернуться к курсу</button></a>
-
-    <table class="table">
-      <thead>
-        <tr>
-          <th>{% trans 'Имя пользователя' %}</th>
-          <th>{% trans 'Дата' %}</th>
-          <th>{% trans 'Баллы' %}</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for taken_quiz in taken_quizzes %}
-          <tr>
-           <td>{{ taken_quiz.learner.user.username }}</td>
-            <td>{{ taken_quiz.date|naturaltime  }}</td>
-            <td>{{ taken_quiz.score }}</td>
-
-          </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-  </div>
-
-</div>
-<div class="container-fluid" style="padding-top: 20px">
+        {% block body %}
 
 
-    </div>
+        <div class="container">
+          <h2 class="mb-3"> {% trans 'Результаты' %}</h2>
 
-{% endblock body %}
+          <div class="sidebar">
+                  <a href={% url 'course' object.course.pk %}><button class = bg-white>Вернуться к курсу</button></a>
+
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>{% trans 'Имя пользователя' %}</th>
+                  <th>{% trans 'Дата' %}</th>
+                  <th>{% trans 'Баллы' %}</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for taken_quiz in taken_quizzes %}
+                  <tr>
+                        {% if taken_quiz.learner.user.profile %}
+                            <td><a href="{% url 'user_detail' taken_quiz.learner.user.profile.pk %}">{{ taken_quiz.learner.user.username }}</a></td>
+                        {% else %}
+                            <td>{{  taken_quiz.learner.user.username  }}</td>
+
+                        {% endif %}
+                    <td>{{ taken_quiz.date|naturaltime  }}</td>
+                    <td>{{ taken_quiz.score }}</td>
+
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+        <div class="container-fluid" style="padding-top: 20px">
+
+
+            </div>
+
+        {% endblock body %}
 

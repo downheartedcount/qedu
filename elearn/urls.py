@@ -44,6 +44,8 @@ urlpatterns = [
     path('acourse/', views.ListCourseView.as_view(), name='list_course'),
     path('dcourse/<int:pk>', views.ADeleteCourse.as_view(), name='dcourse'),
     path('acourse/<int:pk>', views.course_detail.as_view(), name='course_detail'),
+    path('user/<int:pk>', views.user_detail.as_view(), name='user_detail'),
+
     path('update/<int:pk>', views.update_course, name='update_object'),
     path('update/updaterecord/<int:pk>', views.updaterecord, name='updaterecord'),
     path('add/<int:pk>', views.addcourse, name='addcourse'),
@@ -86,5 +88,6 @@ urlpatterns = [
     path('mycourses/', views.showmycourses, name='mycourses'),
     path('lessons/<int:pk>', views.Lesson.as_view(), name='lessons'),
     path('complete/<int:pk>', views.paymentComplete, name="complete"),
+    path('test', views.model_form_view, name='test')
 
 ]

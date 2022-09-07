@@ -134,21 +134,18 @@
                     <h3 class="text-primary mb-3">{% trans 'Добро пожаловать' %}</h3>
                     <h1 class="display-3 mb-3">Q-Education</h1>
                     <div class="">{% trans 'Онлайн обучение, Подготовка к ЕНТ, Профессиональные курсы'%}</div>
-                    <div class="d-flex align-items-center pt-5">
+                    <div class="d-flex align-items-center pt-5 news">
                         <a href="{% url 'lsign' %}" class="btn btn-primary py-3 px-4 me-5">{% trans 'Регистрация' %}</a>
                          <a href="{% url 'login_form' %}" class="btn btn-primary py-3 px-4 me-5">{% trans 'Войти' %}</a>
-                    </div>
-                    <div class="d-flex align-items-center pt-5">
                         <a href="{% url 'shop' %}" class="btn btn-primary py-3 px-4 me-5">{% trans 'Курсы' %}</a>
                         <a href="" class="btn btn-primary py-3 px-4 me-5">{% trans 'Новости' %}</a>
-
                     </div>
                     <div class = "d-flex align-items-center pt-5">
                                                 <button type="button" class="btn-play" data-bs-toggle="modal"
                             data-src="" data-bs-target="#videoModal">
                             <span></span>
                         </button>
-                        <h5 class="ms-4 mb-0 d-none text-white d-sm-block">{% trans 'Ознакомительное видео' %}</h5>
+                        <h5 class="ms-4 mb-0 d-none text-black d-sm-block">{% trans 'Ознакомительное видео' %}</h5>
                     </div>
 
                 </div>

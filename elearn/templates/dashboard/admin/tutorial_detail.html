@@ -12,6 +12,7 @@
                {{ tutorial.title }}
                 <a href="{% url 'update_tutorial' tutorial.pk %}"><button type="button" class="btn btn-danger">Обновить</button></a></td>
                 <a href="{% url 'addfile' tutorial.pk %}"><button type="button" class="btn btn-danger">Загрузить задание</button></a></td>
+                <a href="{% url 'lessons' tutorial.pk %}"><button type="button" class="btn btn-success">Посмотреть как ученик</button></a></td>
 
             </p>
          </div>
@@ -19,11 +20,15 @@
             <!-- Blog Post -->
             <div class="card mb-4">
 
-                    {% video object.video "large" %}
+                    {% video object.video "100% x 300" %}
+
+                    {% video object.video2 "100% x 300" %}
+
+                    {% video object.video3 "100% x 300" %}
 
                <div class="card-body">
                   <h2 class="card-title"></h2>
-                  <p class="card-text" id="textarea">{{ object.content }}</p>
+                  <p class="card-text" id="textarea">{{ object.content|safe }}</p>
                </div>
                 {% if tutorial.task %}
                                     <a href="{{ object.task.url }}"><i class="fas fa-eye"></i>Задание</a>

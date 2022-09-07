@@ -11,6 +11,7 @@ import json
 from decimal import Decimal
 
 from django.test import TestCase
+from tinymce.models import HTMLField
 
 
 class User(AbstractUser):
@@ -20,19 +21,18 @@ class User(AbstractUser):
     is_admin = models.BooleanField(default=False)
 
 
-
-
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     avatar = models.ImageField(upload_to='', default='no-img.jpg', blank=True)
     first_name = models.CharField(max_length=255, default='')
-    last_name = models.CharField(max_length=255, default='')
+    last_name = models.CharField(max_length=255, default='', blank=True)
     email = models.EmailField(default='none@email.com')
     phonenumber = models.CharField(max_length=255, blank=True, null=True)
     city = models.CharField(max_length=255, default='')
     state = models.CharField(max_length=255, default='')
-    instagram = models.CharField(null=True, max_length=255)
-    TikTok = models.CharField(null=True, max_length=255)
+    instagram = models.CharField(null=True, max_length=255, blank=True)
+    TikTok = models.CharField(null=True, max_length=255, blank=True)
+
     def __str__(self):
         return self.user.username
 
@@ -69,11 +69,14 @@ class Module(models.Model):
 
 class Tutorial(models.Model):
     title = models.CharField(max_length=50)
-    content = models.TextField()
+    content = HTMLField()
     module = models.ForeignKey(Module, on_delete=models.CASCADE, default='', )
     created_at = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     video = EmbedVideoField(blank=True, null=True)
+    video2 = EmbedVideoField(blank=True, null=True)
+    video3 = EmbedVideoField(blank=True, null=True)
+
     task = models.FileField(blank=True, null=True)
 
     def __str__(self):
@@ -157,4 +160,6 @@ class RatingModel(models.Model):
 class LearnerAnswer(models.Model):
     student = models.ForeignKey(Learner, on_delete=models.CASCADE, related_name='quiz_answers')
     answer = models.ForeignKey(Answer, on_delete=models.CASCADE, related_name='+')
+
+
 

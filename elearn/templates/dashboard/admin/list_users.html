@@ -32,6 +32,7 @@
                                 <th>Удалить</th>
                                 <th>Добавить курс</th>
                                 <th>Удалить курс</th>
+                                <th>Профиль</th>
 
 
                             </tr>
@@ -54,9 +55,15 @@
         <td>
           <a href="{% url 'aduser' user.pk %}"><button type="button" class="btn btn-danger"> Удалить</button></a></td>
                                         <td>
-          <a href="{% url 'usercourse' user.pk %}"><button type="button" class="btn btn-danger"> Добавить курс</button></a></td>
+          <a href="{% url 'usercourse' user.pk %}"><button type="button" class="btn btn-warning"> Добавить курс</button></a></td>
                                 <td>
           <a href="{% url 'dusercourse' user.pk %}"><button type="button" class="btn btn-danger"> Удалить курс</button></a></td>
+                                <td>
+                                    {% if user.profile %}
+                                                  <a href="{% url 'user_detail' user.profile.pk %}"><button type="button" class="btn btn-success">Профиль</button></a>
+
+                                    {% endif %}
+                                </td>
                                 </tr>
                             {% endfor %}
                         {% endif %}
